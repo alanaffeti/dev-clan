@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Constat{% endblock %}
+
+{% block body %}
+    <h1>Constat</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ constat.id }}</td>
+            </tr>
+            
+            <tr>
+                <th>Id_client</th>
+                <td>{{ constat.idClient }}</td>
+            </tr>
+            <tr>
+                <th>Id_vehicule</th>
+                <td>{{ constat.idVehicule }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ constat.date ? constat.date|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Lieu</th>
+                <td>{{ constat.lieu }}</td>
+            </tr>
+            <tr>
+              <th>Image</th>
+              {% set filePaths = constat.image| split(',') %}
+              {% for filePath in filePaths %}
+
+              <td><img src="{{asset ('uploads/add/' ~ filePath)}}"</td>
+              {% endfor %}
+            
+            </tr>
+            <tr>
+             <tr>
+
+        </tbody>
+    </table>
+
+    <a  class=' btn btn-primary rounded-pill'href="{{ path('app_constat_index') }}">back to list</a>
+
+    <a  class="btn btn-success" href="{{ path('app_constat_edit', {'id': constat.id}) }}">edit</a>
+
+    {{ include('constat/_delete_form.html.twig') }}
+{% endblock %}

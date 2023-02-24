@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Expert index{% endblock %}
+
+{% block body %}
+    <h1>Expert index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Cin</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for expert in experts %}
+            <tr>
+                <td>{{ expert.id }}</td>
+                <td>{{ expert.nom }}</td>
+                <td>{{ expert.prenom }}</td>
+                <td>{{ expert.cin }}</td>
+                <td>
+                    <a  class="btn btn-success" href="{{ path('app_expert_show', {'id': expert.id}) }}">show</a>
+                    <a class="btn btn-success"  href="{{ path('app_expert_edit', {'id': expert.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class=' btn btn-primary rounded-pill' href="{{ path('app_expert_new') }}">Create new</a>
+{% endblock %}

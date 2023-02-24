@@ -1,0 +1,13 @@
+{% extends 'basef.html.twig' %}
+
+{% block title %}New Constat{% endblock %}
+
+{% block body %}
+ <center>
+  <h1 class="text-center">Create new Constat</h1> 
+
+  {{ include('constat/_form.html.twig') }}
+
+  <!--<a href="{{ path('app_constat_index') }}">back to list</a> -->
+  </center>
+{% endblock %}

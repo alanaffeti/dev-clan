@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Constat index{% endblock %}
+
+{% block body %}
+    <h1>Tout les constats</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                
+                <th>Id_client</th>
+                <th>Id_véhicule</th>
+                <th>Date</th>
+                <th>Lieu</th>
+                <th>Images</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for constat in constats %}
+            <tr>
+                <td>{{ constat.id }}</td>
+               
+                <td>{{ constat.idClient }}</td>
+                <td>{{ constat.idVehicule }}</td>
+                <td>{{ constat.date ? constat.date|date('Y-m-d') : '' }}</td>
+                <td>{{ constat.lieu }}</td>
+                <td>{{constat.image}}</td>
+                <td>
+                    <a class="btn btn-success" href="{{ path('app_constat_show', {'id': constat.id}) }}">show</a>
+                    <a class="btn btn-success" href="{{ path('app_constat_edit', {'id': constat.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class=' btn btn-primary rounded-pill' href="{{ path('app_constat_new') }}">Create new</a>
+{% endblock %}
