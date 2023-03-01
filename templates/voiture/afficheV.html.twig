@@ -1,0 +1,46 @@
+{% extends 'base2.html.twig' %}
+
+
+{% block body %}
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>marQUE</th>
+        <th>date_fin</th>
+        <th>prix</th>
+        <th>type</th>
+        <th>Nom</th>
+        <th>prenom</th>
+        <th>cin</th>
+        <th>region</th>
+        <th>Action</th>
+    </tr>
+
+    {% for i in voitures %}
+        <tr>
+            <td>{{i.id}}</td>
+            <td>{{i.marque}}</td>
+            <td>{{ i.typevoiture }}</td>
+            <td>{{ i.matricule}}</td>
+            <td>{{i.modele}}</td>
+            <td>{{i.datefabrication ? i.datefabrication|date('Y-m-d H:i:s') : ''}}</td>
+            <td>{{i.typecarburant}}</td>
+            <td>{{i.kilometrage()}}</td>
+            <td>{{i.etat}}</td>
+            <td>
+                <button type="button" class="btn btn-danger" onclick="if(confirm('Are you sure?')){window.location.href='{{path('suppVoiture',{'id':i.id})}}'}">
+                    <i class="fas fa-trash"></i> Delete
+                </button>
+                <a href="{{ path('viewContrats', {'id': i.id}) }}" class="btn btn-info">
+                    <i class="fas fa-eye"></i> Contracts
+                </a>
+                <a href="{{ path('voiture_edit', {'id': i.id}) }}" class="btn btn-info">
+                    <i class="fas fa-edit"></i> Edit
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}

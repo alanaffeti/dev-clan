@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Contrats pour la voiture {{ voiture.marque }} {{ voiture.modele }}</title>
+	<style>
+		body {
+			padding: 20px;
+			font-family: Arial, sans-serif;
+			font-size: 16px;
+		}
+		h1 {
+			font-size: 36px;
+			text-align: center;
+			margin-bottom: 20px;
+		}
+		ul {
+			list-style: disc;
+			margin-top: 20px;
+			margin-bottom: 20px;
+		}
+		li {
+			margin-bottom: 10px;
+			padding: 5px;
+			transition: background-color 0.3s ease;
+		}
+		li:hover {
+			background-color: #f7f7f7;
+		}
+		button {
+			padding: 5px 10px;
+			background-color: #dc3545;
+			color: #fff;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			transition: background-color 0.3s ease;
+		}
+		button:hover {
+			background-color: #c82333;
+		}
+		footer {
+			margin-top: 50px;
+			text-align: center;
+			color: #999;
+			font-size: 14px;
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<h1>Contrats pour la voiture {{ voiture.marque }} {{ voiture.modele }}</h1>
+	</header>
+	
+	{% if contrats is empty %}
+	    <p>Aucun contrat trouvé pour cette voiture.</p>
+	{% else %}
+	    <ul>
+	        {% for contrat in contrats %}
+	            <li>
+	                Contrat n°{{ contrat.id }} :
+	                {{ contrat.dateDebut|date('d/m/Y') }} - {{ contrat.dateFin|date('d/m/Y') }}
+	                <form action="{{ path('contrat_delete', {'id': contrat.id}) }}" onsubmit="return confirm('Are you sure you want to delete this contrat?');">
+	                    <input type="hidden" name="_method" value="DELETE">
+	                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ contrat.id) }}">
+	                    <button type="submit">Supprimer</button>
+	                </form>
+	            </li>
+	        {% endfor %}
+	    </ul>
+	{% endif %}
+	
+	<footer>
+		<p>Contactez-nous au 01 23 45 67 89 ou par email à contact@monentreprise.com</p>
+	</footer>
+</body>
+</html>

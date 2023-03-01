@@ -1,0 +1,25 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+view_contrats:
+    path: '/voiture/{id}/contrats'
+    controller: App\Controller\ContratController::viewContrats
+    
+
+
+contrat_delete:
+    path: '/contrat/{id}'
+    controller: App\Controller\ContratController::delete
+    requirements:
+        id: '\d+'
+
+voiture_edit:
+    path: '/voiture/{id}/edit'
+    controller: App\Controller\VoitureController::edit
+    methods: ['GET', 'POST']
+    requirements:
+        id: '\d+'
+
+        
+
+        
