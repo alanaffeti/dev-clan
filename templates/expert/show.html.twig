@@ -26,9 +26,9 @@
         </tbody>
     </table>
 
-    <a class=' btn btn-primary rounded-pill' href="{{ path('app_expert_index') }}">back to list</a>
+    <center><a class=' btn btn-primary rounded' href="{{ path('app_expert_index') }}">Back to list</a></center>
 
-    <a class="btn btn-success" href="{{ path('app_expert_edit', {'id': expert.id}) }}">edit</a>
+    {# <a class="btn btn-success" href="{{ path('app_expert_edit', {'id': expert.id}) }}">Edit</a> #}
 
-    {{ include('expert/_delete_form.html.twig') }}
+    {# {{ include('expert/_delete_form.html.twig') }} #}
 {% endblock %}

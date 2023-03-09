@@ -43,9 +43,9 @@
         </tbody>
     </table>
 
-    <a  class=' btn btn-primary rounded-pill'href="{{ path('app_constat_index') }}">back to list</a>
+   <center> <a  class=' btn btn-primary 'href="{{ path('app_constat_index') }}">Back to list</a></center>
 
-    <a  class="btn btn-success" href="{{ path('app_constat_edit', {'id': constat.id}) }}">edit</a>
+   {# <center> <a  class="btn btn-success" href="{{ path('app_constat_edit', {'id': constat.id}) }}">Edit</a></center> #}
 
-    {{ include('constat/_delete_form.html.twig') }}
+    {# {{ include('constat/_delete_form.html.twig') }} #}
 {% endblock %}

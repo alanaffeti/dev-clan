@@ -34,7 +34,13 @@ class ConstatType extends AbstractType
             ])
             ->add('id_vehicule')
             ->add('date')
-            ->add('lieu')
+            ->add('lieu' , ChoiceType::class, [
+                'choices' => [
+                    'tunis ' => 'tunis',
+                    'gabes ' => 'gabes',
+                   
+                ],
+            ])
             ->add('image', FileType::class, [
                 'label' => 'Image (JPG, PNG, GIF)',
                 'required' => false,

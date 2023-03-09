@@ -39,28 +39,56 @@ class ConstatRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Constat[] Returns an array of Constat objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+   
+// public function getStatisticsByDate()
+// {
+//     return $this->createQueryBuilder('constat')
+//         ->select('DATE(constat.date) as date, count(constat.id) as count')
+//         ->groupBy('date')
+//         ->getQuery()
+//         ->getResult();
+// }
+// public function getMonthlyCarCounts()
+// {
+//     $qb = $this->createQueryBuilder('r')
+//         ->select('MONTH(r.date) AS month, YEAR(r.date) AS year, COUNT(r.id) AS constatCount')
+//         ->groupBy('year, month')
+//         ->orderBy('year, month');
 
-//    public function findOneBySomeField($value): ?Constat
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+//     return $qb->getQuery()->getResult();
+// }
+
+// public function getMonthlyConstatCounts()
+// {
+//     $qb = $this->createQueryBuilder('c')
+//         ->select('MONTH(c.date) AS month, YEAR(c.date) AS year, COUNT(c.id) AS constatCount')
+//         ->groupBy('year, month')
+//         ->orderBy('year, month');
+
+//     return $qb->getQuery()->getResult();
+// }
+
+public function barDep(){
+    return $this->createQueryBuilder('r')
+    ->select('count(r.id)')
+    ->where('r.lieu LIKE :constat')
+    // ->where('r.typee LIKE : reclamation')
+    ->setParameter('constat','tunis')
+    ->getQuery()
+    ->getSingleScalarResult();
+}
+
+public function barArr(){
+    return $this->createQueryBuilder('r')
+    ->select('count(r.id)')
+     ->where('r.lieu LIKE :constat')
+    // ->where('r.typee LIKE :  reclamation')
+    ->setParameter('constat','gabes')
+    ->getQuery()
+    ->getSingleScalarResult();
+}
+
+
+
+
 }

@@ -63,4 +63,12 @@ class ExpertRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+public function searchByName(string $nom)
+{
+    $qb = $this->createQueryBuilder('c');
+    $qb->where('c.nom LIKE :nom')
+        ->setParameter('nom', '%' . $nom . '%');
+    
+    return $qb->getQuery()->getResult();
+}
 }

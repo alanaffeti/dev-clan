@@ -6,6 +6,7 @@ use App\Repository\ConstatRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: ConstatRepository::class)]
 class Constat
@@ -13,6 +14,7 @@ class Constat
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("constats")]
    
     private ?int $id = null;
 
@@ -20,18 +22,23 @@ class Constat
 
     #[ORM\Column(type:"integer") ]
     #[Assert\Range(min:1, minMessage:"L'ID doit être supérieur à {{ limit }}.")]
+    #[Groups("constats")]
     private  $id_client ;
 
     #[ORM\Column(type:"integer")]
+    #[Groups("constats")]
     private  $id_vehicule ;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Groups("constats")]
     private ?\DateTimeInterface $date = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups("constats")]
     private ?string $lieu = null;
    
     #[ORM\Column(type:"string", length:255, nullable:true)]
+    #[Groups("constats")]
     private $image;
 
     #[ORM\ManyToOne(inversedBy: 'constats')]

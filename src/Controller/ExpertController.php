@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Expert;
 use App\Form\ExpertType;
+use App\Form\SearchType;
 use App\Repository\ExpertRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -74,5 +75,26 @@ class ExpertController extends AbstractController
         }
 
         return $this->redirectToRoute('app_expert_index', [], Response::HTTP_SEE_OTHER);
+    }
+  /**
+     * @Route("/search", name="search")
+     */
+    public function search(Request $request, ExpertRepository $expertRepository): Response
+    {
+        $form = $this->createForm(SearchType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $query = $form->get('query')->getData();
+            $experts = $expertRepository->searchByName($query);
+
+            return $this->render('expert/search.html.twig', [
+                'experts' => $experts
+            ]);
+        }
+
+        return $this->render('expert/search.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 }

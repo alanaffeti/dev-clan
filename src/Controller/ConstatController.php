@@ -10,6 +10,20 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Dompdf\Dompdf;
+use Dompdf\Options;
+use Geocoder\Query\GeocodeQuery;
+use Geocoder\Provider\GoogleMaps\GoogleMaps;
+use CMEN\GoogleChartsBundle\GoogleCharts\Charts\Material\BarChart;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 #[Route('/constat')]
 class ConstatController extends AbstractController
 {
@@ -27,6 +41,7 @@ class ConstatController extends AbstractController
         $constat = new Constat();
         $form = $this->createForm(ConstatType::class, $constat);
         $form->handleRequest($request);
+        $mail = new PHPMailer(true);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -52,6 +67,35 @@ $filePaths = [];
                  
                 $filePaths[] = $newFilename;
             }
+            try {
+            
+                $time = date('H:i:s \O\n d/m/Y');
+               
+                // $nom = $form->get('nom')->getData();
+                $id_client = $form->get('id_client')->getData();
+    
+               
+                $mail->SMTPDebug = SMTP::DEBUG_SERVER;
+                $mail->isSMTP();
+                $mail->Host       = 'smtp.gmail.com';
+                $mail->SMTPAuth   = true;
+                $mail->Username   = 'acyl.lazrag@esprit.tn';            
+                $mail->Password   = '212JFT7540a';                               
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+                $mail->Port       = 587;
+                $mail->addAddress('acyl.lazrag@esprit.tn' );     
+                $mail->isHTML(true);                                  
+                $mail->Subject = " Assurensea  ";
+                $mail->Body    = " un neauveau constats a été ajouter";
+    
+                $mail->send();
+                $this->addFlash('message','the email has been sent');
+                // $flashy->success('Article Ajoutée','http://your-awesome-link.com');
+    
+            } catch (Exception $e) {
+                echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+            }
+    
 
 
 
@@ -60,20 +104,82 @@ $filePaths = [];
 
             $constatRepository->save($constat, true);
 
-            return $this->redirectToRoute('app_constat_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_constat_new', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('constat/new.html.twig', [
             'constat' => $constat,
+
             'form' => $form,
         ]);
+
+ 
     }
+    #[Route("addConstatJSON/new", name: "addconstatJSON")]
+    public function addconstatJSON(Request $req,NormalizerInterface $Normalizer)
+    {
+        
+        $em = $this->getDoctrine()->getManager();
+        $constat = new constat();
+        $constat->setIdClient($req->get('id_client'));
+        $constat->setIdvehicule($req->get('id_vehicule'));
+        $constat->setLieu($req->get('lieu'));
+
+       
+        $em->persist($constat);
+        $em->flush();
+
+        $jsonContent = $Normalizer->normalize($constat, 'json', ['groups' => 'reclamation']);
+        return new Response(json_encode($jsonContent));
+    }
+
+    #[Route("/AllConstats", name: "list")]
+    public function getConstats(ConstatRepository $repo, SerializerInterface $serializer)
+    {
+        $constats = $repo->findAll();
+        $json = $serializer->serialize($constats, 'json', ['groups' => "constats"]);
+        return new Response($json);
+    }
+
+
 
     #[Route('/{id}', name: 'app_constat_show', methods: ['GET'])]
     public function show(Constat $constat): Response
     {
         return $this->render('constat/show.html.twig', [
             'constat' => $constat,
+        ]);
+    }
+    #[Route('/constatp/{id}', name: 'app_constat_consatp', methods: ['GET'])]
+    public function constatp(Constat $constat): Response
+    {
+        // Configure Dompdf according to your needs
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+        
+        // Instantiate Dompdf with our options
+        $dompdf = new Dompdf($pdfOptions);
+        
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView('constat/constatp.html.twig', [
+            'constat' => $constat,
+        ]);
+        
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+        
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser (inline view)
+        $pdfOutput = $dompdf->output();
+        return new Response($pdfOutput, 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="mypdf.pdf"'
+
         ]);
     }
 
@@ -94,6 +200,9 @@ $filePaths = [];
             'form' => $form,
         ]);
     }
+    
+
+    
 
     #[Route('/{id}', name: 'app_constat_delete', methods: ['POST'])]
     public function delete(Request $request, Constat $constat, ConstatRepository $constatRepository): Response
@@ -104,4 +213,73 @@ $filePaths = [];
 
         return $this->redirectToRoute('app_constat_index', [], Response::HTTP_SEE_OTHER);
     }
+    
+    
+#[Route('/statisccontrat', name: 'stat', methods: ['GET'])]
+public function statisreclamation(ConstatRepository $r )
+{
+    
+    //on va chercher les categories
+    $rech = $r->barDep();
+    $arr = $r->barArr();
+    
+    $bar = new barChart ();
+    $bar->getData()->setArrayToDataTable(
+        [['constat', 'lieu'],
+         ['tunis', intVal($rech)],
+         ['gabes', intVal($arr)],
+        ]
+    );
+
+    $bar->getOptions()->setTitle('les contrat');
+    $bar->getOptions()->getHAxis()->setTitle('Nombre de contrat');
+    $bar->getOptions()->getHAxis()->setMinValue(0);
+    $bar->getOptions()->getVAxis()->setTitle('etat');
+    $bar->getOptions()->SetWidth(800);
+    $bar->getOptions()->SetHeight(400);
+
+
+    return $this->render('constat/stats.html.twig', array('bar'=> $bar )); 
+
+}
+// // #[Route('/rech', name: 'rech', methods: ['GET'])]
+// // public function fonc(Request $request , ConstatRepository $c): Response
+// // {
+// //     $qb = $c->createQueryBuilder('c')
+// //     ->orderBy('c.id_client', 'ASC'); // default order
+// //     // Add sorting based on the query parameters
+// //     $sortField = $request->query->get('sortField', 'id_client');
+// //     $sortDirection = $request->query->get('sortDirection', 'asc');
+// //     $qb->orderBy("c.$sortField", $sortDirection);
+// //     $q = $request->query->get('q');
+// //         if ($q) {
+// //             $qb->andWhere('c.lieu LIKE :search')
+// //             ->setParameter('search', '%' . $q . '%');
+// //         }
+// //         return $this->render('constat/index.html.twig');
+// }
+#[Route('/rech', name: 'rech', methods: ['GET'])]
+public function fonc(Request $request , ConstatRepository $c): Response
+{
+    $qb = $c->createQueryBuilder('c')
+        ->orderBy('c.id_client', 'ASC'); // default order
+        
+    // Add sorting based on the query parameters
+    $sortField = $request->query->get('sortField', 'id_client');
+    $sortDirection = $request->query->get('sortDirection', 'asc');
+    $qb->orderBy("c.$sortField", $sortDirection);
+    
+    $q = $request->query->get('q');
+    if ($q) {
+        $qb->andWhere('c.lieu LIKE :search')
+            ->setParameter('search', '%' . $q . '%');
+    }
+    
+    // Execute the query and fetch the results
+    $results = $qb->getQuery()->getResult();
+    
+    return $this->render('constat/index.html.twig', [
+        'constats' => $results,
+    ]);
+}
 }

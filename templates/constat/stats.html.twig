@@ -1,0 +1,41 @@
+{# {% extends 'base.html.twig' %}
+{% block title %}Statistiques {% endblock %}
+
+{% block body %}
+
+<center>
+<h1>Statistiques</h1>
+</center>
+<body>
+  <div id="div_chart"></div>
+
+   <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+   <script type="text/javascript">
+   
+
+    {{gc_draw(bar, 'div_chart')}}
+    </script>
+   
+{% endblock %} #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Monthly Constat Count</h1>
+
+    <div id="chart_div"></div>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+            var data = google.visualization.arrayToDataTable({{ chart.getData().toJson() }});
+
+            var options = {{ chart.getOptions().toJson() }};
+
+            var chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
+        }
+    </script>
+{% endblock %}

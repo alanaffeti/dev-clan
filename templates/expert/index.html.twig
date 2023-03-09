@@ -3,6 +3,7 @@
 {% block title %}Expert index{% endblock %}
 
 {% block body %}
+
     <h1>Expert index</h1>
 
     <table class="table">
@@ -23,8 +24,10 @@
                 <td>{{ expert.prenom }}</td>
                 <td>{{ expert.cin }}</td>
                 <td>
-                    <a  class="btn btn-success" href="{{ path('app_expert_show', {'id': expert.id}) }}">show</a>
-                    <a class="btn btn-success"  href="{{ path('app_expert_edit', {'id': expert.id}) }}">edit</a>
+                    <a  class="btn btn-success" href="{{ path('app_expert_show', {'id': expert.id}) }}">Show</a>
+                    <a class="btn btn-success"  href="{{ path('app_expert_edit', {'id': expert.id}) }}">Edit</a>
+                    <a class="btn btn-danger"  href="{{ path('app_expert_delete', {'id': expert.id}) }}">Delete</a>
+
                 </td>
             </tr>
         {% else %}
