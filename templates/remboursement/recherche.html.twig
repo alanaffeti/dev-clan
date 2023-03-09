@@ -1,0 +1,40 @@
+{% extends 'baseback.html.twig' %}
+
+{% block content2 %}
+<center> 
+<h2> Recherche par Date<h2>
+<form method="POST">
+<label for="date">Select a date:</label>
+<input type="date" id="date" name="date">
+<input type="submit" value="Recherche">
+</form>  
+<h2> Liste des Factures<h2>  
+<table border="4" width="100%">
+<tr>
+ <th> ID </th>
+ 
+ <th> date_remboursement</th>
+ <th> montant_facture</th>
+
+
+</tr>
+<tr>
+{% for i in remboursement %}
+
+
+<td>{{i.id}} </td>
+
+
+<td>{{ i.Dateremb ? i.Dateremb|date('Y-m-d H:i:s') : '' }}</td>
+<td>{{i.getMontantremb()}} </td>
+
+
+<td>  <a class="btn btn-success href="{{path('modifremboursement',{'id':i.id})}}"> Modifier </a>   </td>
+<td>  <a  class="btn  btn-danger" href="{{path('suppremboursement',{'id':i.id})}}"> supprimer </a>   </td>
+
+
+</tr>
+{% endfor %}
+</table>
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'baseback.html.twig' %}
+{% block content2 %}
+<center> 
+<table border="4" width="100%">
+<tr>
+ <th> ID </th>
+ 
+ <th> date_remboursement</th>
+ <th> montant_remboursement</th>
+
+
+</tr>
+<tr>
+{% for i in remboursements %}
+
+
+<td>{{i.id}} </td>
+
+
+<td>{{ i.Dateremb ? i.Dateremb|date('Y-m-d H:i:s') : '' }}</td>
+<td>{{i.getMontantremb()}} </td>
+
+
+<td>  <a class="btn btn-success href="{{path('modifremboursement',{'id':i.id})}}"> Modifier </a>   </td>
+<td>  <a  class="btn  btn-danger" href="{{path('suppremboursement',{'id':i.id})}}"> supprimer </a>   </td>
+
+
+</tr>
+{% endfor %}
+</table>
+
+{% endblock %}

@@ -1,0 +1,16 @@
+
+{% extends 'baseback.html.twig' %}
+
+{% block content2 %}
+   <center> 
+   {{ form_start(add,{'attr' : {'novalidate' : 'novalidate'}} ) }}
+   {{ form(add) }}
+   {{ form_errors(add.quantite) }}
+   {{ form_errors(add.nom_piece) }}
+   {{ form_errors(add.nom_client) }}
+   {{ form_errors(add.id_client) }}
+   {{ form_errors(add.montant_facture) }}
+   </center>
+
+{% endblock %}
+
