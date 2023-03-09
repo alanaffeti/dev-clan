@@ -1,0 +1,27 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %}Edit Accident{% endblock %}
+
+
+{% block body %}
+    <style>
+        .container{
+            max-width: 60%;
+            margin-top: 5%;
+        }
+    </style>
+
+    <div class="container">
+        <h2 class="text-center mt-5 mb-3">Modifier voiture accident</h2>
+        <div class="card">
+            <div class="card-header">
+                <a class="btn btn-outline-info float-right" href="{{ path('app_accident_index') }}">
+                    voir tout les Voitures
+                </a>
+            </div>
+            <div class="card-body">
+                {% include 'accident/_form.html.twig' with {'button_label': 'Update voiture accidentee', 'button_color': 'btn-outline-success'}  %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

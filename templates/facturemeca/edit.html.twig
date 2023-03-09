@@ -1,0 +1,21 @@
+{% extends 'base5.html.twig' %}
+
+
+
+{% block title %}Edit Facture{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h2 class="text-center mt-5 mb-3">Edit Facture</h2>
+        <div class="card">
+            <div class="card-header">
+                <a class="btn btn-outline-info float-right" href="{{ path('app_facturemeca_index') }}">
+                    Voir tout les factures
+                </a>
+            </div>
+            <div class="card-body">
+                {% include 'facturemeca/_form.html.twig' with {'button_label': 'Update facture', 'button_color': 'btn-outline-success'}  %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

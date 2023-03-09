@@ -1,0 +1,71 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %}infos-mecanicien {{ project.id }}{% endblock %}
+
+{% block body %}
+
+    <style>
+        .container{
+            max-width: 60%;
+            margin-top: 5%;
+        }
+    </style>
+
+    <div class="container">
+        <h2 class="text-center mt-5 mb-3">Les informations de {{ project.nom }}</h2>
+        <div class="card">
+            <div class="card-header">
+                <a class="btn btn-outline-info float-right" href="{{ path('app_projecttest_index') }}">
+                    Voir tout les mecanicien
+                </a>
+            </div>
+
+            <div class="card-body">
+                <table>
+                    <td width="700px">
+                <b class="text-muted">ID:</b>
+                <p>{{ project.id }}</p>
+                <b class="text-muted">Nom:</b>
+                <p>{{ project.nom }}</p>
+                <b class="text-muted">Prenom:</b>
+                <p>{{ project.prenom }}</p>
+                <b class="text-muted">Cin:</b>
+                <p>{{ project.cin }}</p>
+                <b class="text-muted">Adresse_mail:</b>
+                <p>{{ project.adressemail }}</p>
+                <b class="text-muted">Num_tel:</b>
+                <p>{{ project.numtel }}</p>
+                    </td>
+                    <td width="700px">
+                <b class="text-muted">Salaire:</b>
+                <p>{{ project.salaire }}</p>
+                <b class="text-muted">Disponiblite:</b>
+                <p>{{ project.disponiblite }}</p>
+
+                <b class="text-muted">Lieu_garage:</b>
+                <p>{{ project.lieugarage }}</p>
+
+                        <div>
+                <b class="text-muted">Facture_reparation:</b>
+                        {% set filePaths = project.facturerep|split(',') %}
+                        {% for filePath in filePaths %}
+                            <p>    <img src="{{ asset('uploads/edit/' ~ filePath) }}"  width="100%"></p>
+                        {% endfor %}
+                  </div>
+
+                <b class="text-muted">Username:</b>
+                <p>{{ project.username }}</p>
+
+                <b class="text-muted">Password:</b>
+                <p>{{ project.password }}</p>
+
+             <!--   <b class="text-muted">Date Created:</b>
+                <p> {{ project.createdAt ? project.createdAt|date('Y-m-d H:i:s') : '' }}</p>
+                <b class="text-muted">Date Updated:</b>
+                <p>{{ project.updatedAt ? project.updatedAt|date('Y-m-d H:i:s') : '' }}</p>
+                 -->   </td>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

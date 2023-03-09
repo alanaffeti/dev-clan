@@ -1,0 +1,28 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %}L'ajout d'un mecanicien{% endblock %}
+
+{% block body %}
+
+
+    <style>
+        .container{
+            max-width: 60%;
+            margin-top: 5%;
+
+        }
+    </style>
+    <div class="container">
+        <h2 class="text-center mt-5 mb-3">Ajouter un mecanicien </h2>
+        <div class="card">
+            <div class="card-header">
+                <a class="btn btn-outline-info float-right" href="{{ path('app_projecttest_index') }}">
+                    Voir tout les mecaniciens
+                </a>
+            </div>
+            <div class="card-body">
+                {{ include('projecttest/_form.html.twig')  }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,4 @@
+<form method="post" action="{{ path('app_facturemeca_delete', {'id_fact': facturemeca.id_fact}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ facturemeca.id_fact) }}">
+    <button class="btn">Delete</button>
+</form>

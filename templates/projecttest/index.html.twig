@@ -1,0 +1,95 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %}liste des mecaniciens{% endblock %}
+
+{% block body %}
+    <div style="display: flex;align-items: center;justify-content:center;margin-left: 350px">
+    <style>
+        .container{
+            max-width: 100%;
+            margin-top: 30px;
+
+        }
+    </style>
+    <div class="container">
+        <h2 class="text-center mt-5 mb-3">Tableau des mecaniciens</h2>
+        <div class="card">
+            <div class="card-header" >
+                <a class="btn btn-outline-primary" href="{{ path('app_projecttest_new') }}">
+                    Ajouter mecanicien
+                </a>
+            </div>
+            <div class="card-body" >
+                <table class="table table-bordered" >
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom</th>
+                        <th>Prenom</th>
+                        <th>Cin</th>
+                        <th>Adresse_mail</th>
+                        <th>Num_tel</th>
+                        <th>Salaire</th>
+                        <th>Disponibilite</th>
+                        <th>Lieu_garage</th>
+                        <th>Facture_rep</th>
+
+                        <th>UserName</th>
+                        <th>Password</th>
+                      <!--  <th>Date Created</th>
+                        <th>Date Updated</th>-->
+                        <th width="240px">Action</th>
+
+                    </tr>
+                    {% for project in projects %}
+                        <tr>
+                            <td>{{ project.id }}</td>
+                            <td>{{ project.nom }}</td>
+                            <td>{{ project.prenom }}</td>
+                            <td>{{ project.cin }}</td>
+                            <td>{{ project.adressemail }}</td>
+                            <td>{{ project.numtel }}</td>
+                            <td>{{ project.salaire }}</td>
+                            <td>{{ project.disponiblite }}</td>
+                            <td>{{ project.lieugarage }}</td>
+                            <td>{{ project.facturerep }}</td>
+                            <td>{{  project.username }}</td>
+                            <td>{{  project.password }}</td>
+                          <!--  <td>{{ project.createdAt ? project.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td>{{ project.updatedAt ? project.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+-->
+
+                            <td>
+
+                                <form method="post" action="{{ path('app_projecttest_delete', {'id': project.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');" >
+                                    <a
+                                            class="btn btn-outline-info"
+                                            href="{{ path('app_projecttest_show', {'id': project.id}) }}">
+                                        Show
+                                    </a>
+
+                                    <a
+                                            class="btn btn-outline-success"
+                                            href="{{ path('app_projecttest_edit', {'id': project.id}) }}">
+                                        Edit
+                                    </a>
+
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ project.id) }}">
+                                    <button class="btn btn-outline-danger">Delete</button>
+                                </form>
+
+                            </td>
+                        </tr>
+
+                    {% endfor %}
+
+                </table>
+                <div class="count">
+                    {{ knp_pagination_render(projects) }}
+                </div>
+
+            </div>
+        </div>
+    </div>
+    </div>
+
+{% endblock %}

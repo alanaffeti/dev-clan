@@ -1,0 +1,95 @@
+
+
+{% extends 'base1.html.twig' %}
+
+{% block title %}Afficher voiture accidentee {{ accident.id }}{% endblock %}
+
+{% block body %}
+
+    <style>
+        .container{
+            max-width: 75%;
+            margin-top: 5%;
+        }
+    </style>
+    <div class="container">
+        <h2 class="text-center mt-5 mb-3">Voitures accidentees de {{ accident.nomclient }}  {{ accident.prenomclient }}
+         Matricule :{{ accident.matricule }}</h2>
+        <div class="card">
+            <div class="card-header">
+                <a class="btn btn-outline-info float-right" href="{{ path('app_accident_index') }}">
+                    voir tout les voitures
+                </a>
+            </div>
+            <div class="card-body">
+
+                <table>
+                    <td width="500px">
+                <b class="text-muted">Nom:</b>
+                <p>{{ accident.nomclient }}</p>
+                <b class="text-muted">Prenom:</b>
+                <p>{{ accident.prenomclient }}</p>
+                <b class="text-muted">Matricule:</b>
+                <p>{{ accident.matricule }}</p>
+
+
+                    <td width="700px">
+                        <div>
+                <b class="text-muted">Image_voiture_etat_accidente:</b>
+                            {% set filePaths = accident.image|split(',') %}
+                            {% for filePath in filePaths %}
+                                <p>    <img src="{{ asset('uploads/personne/' ~ filePath) }}"  width="100%"></p>
+                                <a href="{{ path('app_image_delete',{id:accident.id,image:0}) }}">Supprimer</a>
+                                <a href="{{ path('app_accident_edit2',{id:accident.id}) }}">Modifier</a>
+
+
+                            {% endfor %}
+                <!--<p><img src="" alt="image" width="100%"></p>
+                        --></div>
+                        <div>
+                        <b class="text-muted">Voiture apres la reparation:</b>
+                        {% set filePaths = accident.imagevoiturereparee|split(',') %}
+                        {% for filePath in filePaths %}
+                            <p>
+                                <img src="{{ asset('uploads/personne/' ~ filePath) }}"  width="100%"></p>
+                            <a href="{{ path('app_image_delete',{id:accident.id,image:1}) }}">Supprimer</a>
+                        {% endfor %}
+                        </div>
+
+                        <div>
+                            <b class="text-muted">Piece Endommage par l'accident:</b>
+                            {% set filePaths = accident.imagepieceendommage|split(',') %}
+                            {% for filePath in filePaths %}
+                                <p>    <img src="{{ asset('uploads/personne/' ~ filePath) }}" width="100%">
+                                <a href="{{ path('app_image_delete',{id:accident.id,image:2}) }}">Supprimer</a>
+                                </p>
+                            {% endfor %}
+                        </div>
+
+                        <div>
+                            <b class="text-muted">Nouveaux Pieces :</b>
+                            {% set filePaths = accident.imagenouveaupieces|split(',') %}
+                            {% for filePath in filePaths %}
+                                <p>    <img src="{{ asset('uploads/personne/' ~ filePath) }}" width="100%"></p>
+                                <a href="{{ path('app_image_delete',{id:accident.id,image:3}) }}">Supprimer</a>
+                            {% endfor %}
+                        </div>
+
+                        <div>
+                            <b class="text-muted">Facture de reparation:</b>
+                            {% set filePaths = accident.imagefacturereparation|split(',') %}
+                            {% for filePath in filePaths %}
+
+                                <p>    <img src="{{ asset('uploads/personne/' ~ filePath) }}"  width="100%"></p>
+                                <a href="{{ path('app_image_delete',{id:accident.id,image:4}) }}">Supprimer</a>
+                            {% endfor %}
+                        </div>
+                </td>
+                </table>
+
+
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

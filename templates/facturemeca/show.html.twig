@@ -1,0 +1,32 @@
+{% extends 'base5.html.twig' %}
+
+{% block title %}Facture{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h2 class="text-center mt-5 mb-3">Show Facture</h2>
+        <div class="card">
+            <div class="card-header">
+                <a class="btn btn-outline-info float-right" href="{{ path('app_facturemeca_index') }}">
+                    Voir tout les factures
+                </a>
+            </div>
+            <div class="card-body">
+                <b class="text-muted">Article:</b>
+                <p>{{ facturemeca.article }}</p>
+                <b class="text-muted">Quantite:</b>
+                <p>{{ facturemeca.quantite }}</p>
+                <b class="text-muted">Description:</b>
+                <p>{{ facturemeca.description }}</p>
+                <b class="text-muted">Prix Avec TVA:</b>
+                <p>{{ facturemeca.prixavectva }}</p>
+                <b class="text-muted">Prix Hors TVA:</b>
+                <p>{{ facturemeca.prixsanstva }}</p>
+                <b class="text-muted">Total:</b>
+                <p>{{ facturemeca.total }}</p>
+
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

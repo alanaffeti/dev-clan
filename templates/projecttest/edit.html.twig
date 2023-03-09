@@ -1,0 +1,25 @@
+{% extends 'base1.html.twig' %}
+
+{% block title %}Modifier mecanicien {{ project.id }}{% endblock %}
+
+{% block body %}
+    <style>
+        .container{
+            max-width: 60%;
+            margin-top: 5%;
+        }
+    </style>
+    <div class="container">
+        <h2 class="text-center mt-5 mb-3">Modifier mecanicien {{ project.nom }}</h2>
+        <div class="card">
+            <div class="card-header">
+                <a class="btn btn-outline-info float-right" href="{{ path('app_projecttest_index') }}">
+                    Voir tout les mecaniciens
+                </a>
+            </div>
+            <div class="card-body">
+                {% include 'projecttest/_form.html.twig' with {'button_label': 'Modifier ', 'button_color': 'btn-outline-success'}  %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
