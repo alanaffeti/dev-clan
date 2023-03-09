@@ -2,24 +2,29 @@
 #    path: /
 #    controller: App\Controller\DefaultController::index
 
-app_user_delete:
-    path: '/delete/{id}'
-    controller: App\Controller\UserController::delete
-    methods: ['DELETE']
+# app_user_delete:
+#     path: '/delete/{id}'
+#     controller: App\Controller\UserController::delete
+#     methods: ['DELETE']
 
 
 
 
-suppC:
-    path: '/removeClientt/{id}'
-    controller: App\Controller\ClienttController::suppC
-    requirements:
-        id: '[0-9]+'
-    methods: ['DELETE']
+# suppC:
+#     path: '/removeClientt/{id}'
+#     controller: App\Controller\ClienttController::suppC
+#     requirements:
+#         id: '[0-9]+'
+#     methods: ['DELETE']
 
 
-modifClientt:
-    path: '/modifClientt/{id}'
-    controller: App\Controller\ClienttController::modifClientt  
-    requirements:
-        id: '[^\s/]+'
+# modifClientt:
+#     path: '/modifClientt/{id}'
+#     controller: App\Controller\ClienttController::modifClientt  
+#     requirements:
+#         id: '[^\s/]+'
+
+# createUser:
+#     path: /create
+#     controller: App\Controller\RegistrationController::createUser
+#     methods: ['POST']

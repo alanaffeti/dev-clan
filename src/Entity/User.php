@@ -6,6 +6,7 @@ use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -13,28 +14,34 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups("users")]
     private ?int $id = null;
 
     #[ORM\Column(length: 180)]
+    #[Groups("users")]
     #[Assert\NotBlank(message:"please enter your name")]
     private ?string $name = null;
 
     #[ORM\Column(length: 180)]
+    #[Groups("users")]
     #[Assert\NotBlank(message:"please enter your nlastame")]
     private ?string $lastname = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Groups("users")]
     #[Assert\NotBlank(message:"Veuillez saisir votre adresse email.")]
      #[Assert\Email(message:"Veuillez saisir une adresse email valide.")]
     private ?string $email = null;
 
     #[ORM\Column]
+    #[Groups("users")]
     private array $roles = [];
 
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Groups("users")]
     #[Assert\NotBlank(message:"Veuillez saisir un mot de passe.")]
      #[Assert\Length(
         min:6,
@@ -44,6 +51,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      )]
     private ?string $password = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $reset_token = null;
+ 
+     
+     #[ORM\Column(type:"boolean")]
+     
+    private $isBlocked = false;
+    
+    // ...
     public function getId(): ?int
     {
         return $this->id;
@@ -179,5 +195,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->reset_token = $reset_token;
     }
+  
+    
+    public function getIsBlocked(): bool
+    {
+        return $this->isBlocked;
+    }
 
+    public function setIsBlocked(bool $isBlocked): self
+    {
+        $this->isBlocked = $isBlocked;
+
+        return $this;
+    }
+
+    
 }

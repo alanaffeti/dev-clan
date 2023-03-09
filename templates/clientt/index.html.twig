@@ -27,6 +27,7 @@
 								<th>telephone</th>
 								<th>genre</th>
 								<th>remove</th>
+                                <th> edit </th>
 							</tr>
 						</thead>
 						<tbody>
@@ -48,7 +49,7 @@
 											</form>
 										{% endif %}
 									</td>
-
+                                   <td><a  class="btn btn-success" href="{{ path('app_user_edit', {'id': user.id}) }}">Modifier</a> </td>
 
 								</tr>
 							{% endfor %}
