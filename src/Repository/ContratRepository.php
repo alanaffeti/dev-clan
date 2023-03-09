@@ -63,4 +63,12 @@ class ContratRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+public function SortBydate()
+{
+    return $this->createQueryBuilder('e')
+        ->orderBy('e.datefabrication','ASC')
+        ->getQuery()
+        ->getResult()
+        ;
+}
 }

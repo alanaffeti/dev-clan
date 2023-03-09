@@ -5,6 +5,11 @@ namespace App\Entity;
 use App\Repository\ContratRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Constraints\NotBlank;
+
 
 #[ORM\Entity(repositoryClass: ContratRepository::class)]
 class Contrat
@@ -18,17 +23,19 @@ class Contrat
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Groups("contrats")]
+    #[Assert\NotBlank(message:"Le champ Dtae de debut ne doit pas être vide.")]
 
     private ?\DateTimeInterface $datedebut = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Groups("contrats")]
+    #[Assert\NotBlank(message:"Le champ date de fin  ne doit pas être vide.")]
 
     private ?\DateTimeInterface $datefin = null;
 
     #[ORM\Column]
     #[Groups("contrats")]
-
+    
     private ?float $prix = null;
 
     #[ORM\Column(length: 255)]
@@ -38,21 +45,36 @@ class Contrat
 
     #[ORM\Column(length: 255)]
     #[Groups("contrats")]
-
+    #[Assert\NotBlank(message:"Invalid Name.")]
+    #[Assert\Regex(
+        pattern:'/^[a-zA-Z]+$/',
+       message:"Invalid Name."
+   )]
     private ?string $nomconducteur = null;
 
     #[ORM\Column(length: 255)]
     #[Groups("contrats")]
+    #[Assert\NotBlank(message:"Invalid Name.")]
+     #[Assert\Regex(
+         pattern:'/^[a-zA-Z]+$/',
+        message:"Invalid Name."
+    )]
 
     private ?string $prenomconducteur = null;
 
     #[ORM\Column]
+    
     #[Groups("contrats")]
-
+    #[Assert\NotBlank(message:"Le champ CIN ne doit pas être vide.")]
+     #[Assert\Regex(
+         pattern:"/^\d{8}$/",
+        message:"Le CIN doit contenir exactement 8 chiffres."
+    )]
     private ?int $cin = null;
 
     #[ORM\Column(length: 255)]
     #[Groups("contrats")]
+    #[Assert\NotBlank(message:"Le champ region ne doit pas être vide.")]
 
     private ?string $region = null;
 
@@ -172,4 +194,17 @@ class Contrat
 
         return $this;
     }
+
+    
+    #[Assert\Callback]
+
+    public function validate(ExecutionContextInterface $context, $payload)
+    {
+        if ($this->datefin <= $this->datedebut) {
+            $context->buildViolation('La date de fin doit être supérieure à la date de début.')
+                ->atPath('datefin')
+                ->addViolation();
+        }
+    }
+
 }

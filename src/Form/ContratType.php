@@ -9,6 +9,9 @@ use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\Regex;
 
 class ContratType extends AbstractType
 {
@@ -21,12 +24,45 @@ class ContratType extends AbstractType
            ->add('datefin', DateType::class, [
             'widget' => 'single_text',
            ])
-           ->add('prix', MoneyType::class)
-           ->add('type', TextType::class)
-           ->add('nomconducteur', TextType::class)
-           ->add('prenomconducteur', TextType::class)
-           ->add('cin', TextType::class)
-           ->add('region', TextType::class);
+           ->add('prix', MoneyType::class, [
+            'property_path' => 'prix'
+        ])
+           ->add('type', TextType::class ,[
+            'constraints' => [
+            new NotBlank(['message' => 'Veuillez saisir votre adresse email.']),],])
+           ->add('nomconducteur', TextType::class, [
+            'constraints' => [
+                new Regex([
+                    'pattern' => '/^[a-zA-Z]+$/',
+                    'message' => 'Le nom doit contenir seulement des lettres.'
+                ])
+            ]
+        ])
+        
+        ->add('prenomconducteur', TextType::class, [
+            'constraints' => [
+                new Regex([
+                    'pattern' => '/^[a-zA-Z]+$/',
+                    'message' => 'Le prénom doit contenir seulement des lettres.'
+                ])
+            ]
+        ])
+           ->add('cin', null, [
+            'constraints' => [
+
+             new  Regex(
+                  pattern:"/^\d{8}$/",
+                 message:"Le CIN doit contenir exactement 8 chiffres."
+             ),
+             new NotBlank([
+                        'message' => 'Veuillez saisir votre cin'
+                    ])
+            ],
+
+        ])           
+        ->add('region', TextType::class,[
+            'constraints' => [
+            new NotBlank(['message' => 'Veuillez saisir votre adresse email.']),],])
             
         ;
     }

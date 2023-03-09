@@ -1,3 +1,7 @@
+{% extends 'base2.html.twig' %}
+
+
+{% block body %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,12 +62,73 @@
 	        {% for contrat in contrats %}
 	            <li>
 	                Contrat n°{{ contrat.id }} :
-	                {{ contrat.dateDebut|date('d/m/Y') }} - {{ contrat.dateFin|date('d/m/Y') }}
+	       
+</head>
+<body>
+    {# <h1>Constat</h1> #}
+    
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ contrat.id }}</td>
+            </tr>
+            
+            <tr>
+                <th>Prix</th>
+                <td>{{ contrat.prix }}</td>
+            </tr>
+            <tr>
+                <th>Type de voiture</th>
+                <td>{{ contrat.type }}</td>
+            </tr>
+            <tr>
+                <th>Date de debut </th>
+                <td>{{ contrat.datedebut ? contrat.datedebut|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Date de fin </th>
+                <td>{{ contrat.datefin ? contrat.datefin|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Nom conducteur</th>
+                <td>{{ contrat.nomconducteur }}</td>
+            </tr>
+            <tr>
+                <th>prenom conducteur</th>
+                <td>{{ contrat.prenomconducteur }}</td>
+            </tr>
+            <tr>
+                <th>Cin</th>
+                <td>{{ contrat.cin }}</td>
+            </tr>
+            <tr>
+                <th>Region</th>
+                <td>{{ contrat.region }}</td>
+            </tr>
+            
+        
+    </tr>
+            
+            </tr>
+            <tr>
+             <tr>
+
+        </tbody>
+    </table>
+
+    </body>
 	                <form action="{{ path('contrat_delete', {'id': contrat.id}) }}" onsubmit="return confirm('Are you sure you want to delete this contrat?');">
 	                    <input type="hidden" name="_method" value="DELETE">
 	                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ contrat.id) }}">
 	                    <button type="submit">Supprimer</button>
+
+						 <a href="{{ path('pdf', {'id': contrat.id}) }}" class="btn btn-info">
+                    <i class="fas fa-edit"></i> pdf
+                </a>
 	                </form>
+					
 	            </li>
 	        {% endfor %}
 	    </ul>
@@ -74,3 +139,4 @@
 	</footer>
 </body>
 </html>
+{% endblock %}

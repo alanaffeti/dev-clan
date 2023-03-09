@@ -22,6 +22,8 @@ use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Constraints\DateTime;
 
+use Knp\Component\Pager\PaginatorInterface;
+use CMEN\GoogleChartsBundle\GoogleCharts\Charts\Material\BarChart;
 
 use App\Entity\Contrat;
 use App\Entity\Voiture;
@@ -65,7 +67,7 @@ Request $request){
     $em->persist($contrat);
     $em->persist($voiture);
     $em->flush();
-    return $this->redirectToRoute("addcontrat");}
+    return $this->redirectToRoute("app_voiture");}
     return $this->render("contrat/add.html.twig",
     [
         'voiture' => $voiture,
@@ -73,6 +75,29 @@ Request $request){
     ]);
 }
 
+
+#[Route('/addbackcontrat', name: 'addBackcontrat')]
+public function addBackContratVoiture(ManagerRegistry $doctrine,
+Request $request){
+    $voiture= new Voiture();
+    $contrat= new Contrat();
+    $voiture->addContrat($contrat);
+    $form=$this->createForm(VoitureType::class,
+    $voiture);
+    $form->handleRequest($request);
+    //Action d'ajout
+    if($form->isSubmitted() && $form->isValid()){
+    $em =$doctrine->getManager() ;
+    $em->persist($contrat);
+    $em->persist($voiture);
+    $em->flush();
+    return $this->redirectToRoute("afficheVoiture");}
+    return $this->render("contrat/addbackContrat.html.twig",
+    [
+        'voiture' => $voiture,
+        'f' => $form->createView(),
+    ]);
+}
 
 
 
@@ -97,13 +122,21 @@ public function suppV(VoitureRepository $v, $id, ManagerRegistry $M): Response
 
 
 #[Route('/afficheVoiture', name: 'afficheVoiture')]
-public function affichevoiture(VoitureRepository $r): Response
+public function affichevoiture(VoitureRepository $r,Request $request, PaginatorInterface $Paginator): Response
 {
     $v=$r->findall();
+    $pagination = $Paginator->paginate(
+        $r->paginationQuery(),
+        $request->query->get('page',1),
+        2
 
+
+
+
+    );
 
     return $this->render('voiture/afficheV.html.twig', [
-        'voitures' => $v,
+        'pagination' => $pagination,
     ]);
 } 
 #[Route('/voiture/{id}/contrats', name: 'viewContrats')]
@@ -215,10 +248,71 @@ public function edit(Request $request, Voiture $voiture)
 
 
 
+    #[Route('/statisccontrat', name: 'stat', methods: ['GET'])]
+    public function statisreclamation(VoitureRepository $r)
+    {
+        //on va chercher les categories
+        $rech = $r->barDep();
+        $arr = $r->barArr();
+        
+        $bar = new barChart ();
+        $bar->getData()->setArrayToDataTable(
+            [['contrat', 'etat'],
+             ['Essence', intVal($rech)],
+             ['Diesel', intVal($arr)],
+            
+    
+            ]
+        );
+    
+        $bar->getOptions()->setTitle('les voiture');
+        $bar->getOptions()->getHAxis()->setTitle('Nombre de voiture');
+        $bar->getOptions()->getHAxis()->setMinValue(0);
+        $bar->getOptions()->getVAxis()->setTitle('etat');
+        $bar->getOptions()->SetWidth(800);
+        $bar->getOptions()->SetHeight(400);
+    
+    
+        return $this->render('voiture/statics.html.twig', array('bar'=> $bar )); 
+    
+    }
 
 
+    #[Route('/fonc', name: 'fonc', methods: ['GET'])]
+    public function fonc(Request $request,VoitureRepository $v, PaginatorInterface $paginator): Response
+    {
+        $qb = $v->createQueryBuilder('c')
+        ->orderBy('c.datefabrication', 'ASC'); // default order
+        // Add sorting based on the query parameters
+        $sortField = $request->query->get('sortField', 'datefabrication');
+        $sortDirection = $request->query->get('sortDirection', 'asc');
+        $qb->orderBy("c.$sortField", $sortDirection);
 
+        // Add a search filter based on the query parameter 'q'
+        $q = $request->query->get('q');
+        if ($q) {
+            $qb->andWhere('c.matricule LIKE :search')
+            ->setParameter('search', '%' . $q . '%');
+        }
 
+        // Paginate the results
+        $pagination = $paginator->paginate(
+            $qb, // query builder
+            $request->query->getInt('page', 1), // current page number
+            2 // maximum number of results per page
+        );
+
+        // if ($this->isGranted('ROLE_ADMIN')){
+            return $this->render('voiture/afficheV.html.twig', [
+                'pagination' => $pagination,
+                'sortField' => $sortField,
+                'sortDirection' => $sortDirection,
+                
+            ]);
+        // }else{
+        //     return $this->render('error_pages/meme.html.twig');
+        // }
+    }
 
 
 

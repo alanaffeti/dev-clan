@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Voiture;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Knp\Component\Pager\PaginatorInterface;
 
 /**
  * @extends ServiceEntityRepository<Voiture>
@@ -38,7 +39,13 @@ class VoitureRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-
+    public function paginationQuery()
+    {
+        return $this->createQueryBuilder('a')
+        ->orderBy('a.id' , 'ASC')
+        ->getQuery()
+        ;
+    }
 //    /**
 //     * @return Voiture[] Returns an array of Voiture objects
 //     */
@@ -63,4 +70,23 @@ class VoitureRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+public function barDep(){
+    return $this->createQueryBuilder('r')
+    ->select('count(r.id)')
+    ->where('r.typecarburant LIKE :voiture')
+    // ->where('r.typee LIKE : reclamation')
+    ->setParameter('voiture','Essence')
+    ->getQuery()
+    ->getSingleScalarResult();
+}
+
+public function barArr(){
+    return $this->createQueryBuilder('r')
+    ->select('count(r.id)')
+     ->where('r.typecarburant LIKE :voiture')
+    // ->where('r.typee LIKE :  reclamation')
+    ->setParameter('voiture','Diesel')
+    ->getQuery()
+    ->getSingleScalarResult();
+}
 }

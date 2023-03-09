@@ -1,0 +1,10 @@
+knp_paginator:
+    page_range: 5 # The number of page links shown in the paginator
+    default_options:
+        page_name: page # The query parameter name for the page number
+        sort_field_name: sort # The query parameter name for the sort field
+        sort_direction_name: direction # The query parameter name for the sort direction
+        distinct: true # Whether to return only distinct results (applies only when using Doctrine)
+    template:
+        pagination: '@KnpPaginator/Pagination/twitter_bootstrap_v4_pagination.html.twig' # The template used for rendering the paginator
+        sortable: '@KnpPaginator/Pagination/sortable_link.html.twig' # The template used for rendering sort links

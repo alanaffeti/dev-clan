@@ -6,6 +6,8 @@ use App\Repository\VoitureRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
+use Symfony\Component\Validator\Constraints\NotBlank;
+
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -22,7 +24,10 @@ class Voiture
 
     #[ORM\Column(length: 255)]
     #[Groups("voitures")]
+
     #[ApiProperty]
+    #[Assert\NotBlank(message:"Le champ marque ne doit pas être vide.")]
+
     private ?string $marque = null;
 
     #[ORM\Column(length: 255)]
@@ -35,15 +40,18 @@ class Voiture
     #[ApiProperty]
 
     private ?string $matricule = null;
+    #[Assert\NotBlank(message:"Le champ matricule ne doit pas être vide.")]
 
     #[ORM\Column(length: 255)]
     #[Groups("voitures")]
     #[ApiProperty]
 
     private ?string $modele = null;
+    #[Assert\NotBlank(message:"Le champ modele ne doit pas être vide.")]
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     #[Groups("voitures")]
+    #[Assert\NotBlank(message:"Le champ date de fabrication ne doit pas être vide.")]
 
     private ?\DateTimeInterface $datefabrication = null;
 
@@ -54,11 +62,13 @@ class Voiture
 
     #[ORM\Column]
     #[Groups("voitures")]
+    #[Assert\NotBlank(message:"Le champ kilometrage ne doit pas être vide.")]
 
     private ?int $kilometrage = null;
 
     #[ORM\Column(length: 255)]
     #[Groups("voitures")]
+    #[Assert\NotBlank(message:"Le champ Etat ne doit pas être vide.")]
 
     private ?string $etat = null;
 

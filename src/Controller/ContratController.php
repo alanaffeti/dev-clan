@@ -1,13 +1,4 @@
 <?php
-
-
-
-
-
-
-
-
-
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,6 +7,12 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Voiture;
 use App\Entity\Contrat;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Dompdf\Dompdf;
+use Dompdf\Options;
+use CMEN\GoogleChartsBundle\GoogleCharts\Charts\Material\BarChart;
+use DateTime;
+
 
 use App\Repository\VoitureRepository;
 use App\Repository\ContratRepository;
@@ -81,5 +78,68 @@ public function modifclassroom(ManagerRegistry $doctrine, Request $request, $id,
 }
 
 
+#[Route('/pdf/{id}', name: 'pdf', methods: ['GET'])]
+    public function constatp(Contrat $contrat): Response
+    {
+
+        $date = new DateTime();
+        echo $date->format('Y-m-d H:i:s');
+
+        // Configure Dompdf according to your needs
+        $pdfOptions = new Options();
+        $pdfOptions->set('defaultFont', 'Arial');
+        
+        // Instantiate Dompdf with our options
+        $dompdf = new Dompdf($pdfOptions);
+        
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView('contrat/contratpdf.html.twig', [
+            'contrat' => $contrat,
+            'current_date' => $date,
+
+        ]);
+        
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+        
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A4', 'portrait');
+
+        // Render the HTML as PDF
+        $dompdf->render();
+
+        // Output the generated PDF to Browser (inline view)
+        $pdfOutput = $dompdf->output();
+        return new Response($pdfOutput, 200, [
+            'Content-Type' => 'application/pdf',
+        ]);
+    }
+
+    #[Route('/statisccontrat', name: 'stat', methods: ['GET'])]
+public function statisreclamation(ContratRepository $r)
+{
+    //on va chercher les categories
+    $rech = $r->barDep();
+    $arr = $r->barArr();
+    
+    $bar = new barChart ();
+    $bar->getData()->setArrayToDataTable(
+        [['contrat', 'etat'],
+         ['en cours', intVal($rech)],
+         ['traite', intVal($arr)],
+        ]
+    );
+
+    $bar->getOptions()->setTitle('les contrat');
+    $bar->getOptions()->getHAxis()->setTitle('Nombre de contrat');
+    $bar->getOptions()->getHAxis()->setMinValue(0);
+    $bar->getOptions()->getVAxis()->setTitle('etat');
+    $bar->getOptions()->SetWidth(800);
+    $bar->getOptions()->SetHeight(400);
+
+
+    return $this->render('voiture/statics.html.twig', array('bar'=> $bar )); 
+
+}
 
 }
