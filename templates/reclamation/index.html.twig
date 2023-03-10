@@ -1,0 +1,118 @@
+{% extends 'base2.html.twig' %}
+
+{% block title %}Vos Reclamations
+{% endblock %}
+
+{% block body %}
+    <h1>Vos Reclamations</h1>
+     <div class="col-lg-4" style="float: left">
+                <div class="card my-4">
+                    <h5 class="card-header">Rechercher</h5>
+                    <div class="card-body">
+                        <div class="input-group" >
+                            <form method="get" action="{{ path('search_reclamation') }}">
+                                <input type="text" name="query" class="search-input" placeholder="Rechercher publication">
+
+                                <style>
+								
+
+                                    .search-input {
+                                        border: 1px solid #ccc;
+                                        border-radius: 5px;
+                                        box-sizing: border-box;
+                                        font-size: 16px;
+                                        padding: 10px;
+                                        width: 100%;
+                                    }
+
+                                    .search-input::placeholder {
+                                        color: #aaa;
+                                    }
+                                </style>
+
+                                <button type="submit" class="search-button">Rechercher</button>
+
+                                <style>
+                                    .search-button {
+                                        background: linear-gradient(to bottom, #6c757d, #5a6268);
+                                        border-radius: 5px;
+                                        border: none;
+                                        color: #fff;
+                                        cursor: pointer;
+                                        font-size: 16px;
+                                        font-weight: bold;
+                                        padding: 10px 20px;
+                                        text-align: center;
+                                        text-decoration: none;
+                                        transition: all 0.2s ease-in-out;
+                                    }
+
+                                    .search-button:hover {
+                                        background: linear-gradient(to bottom, #5a6268, #6c757d);
+                                    }
+                                </style>
+                            </form>
+              </span>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+   {% for message in app.flashes('success') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+        {% endfor %}
+
+
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                
+                
+                <th>Nom</th>
+                <th>Prenom</th>
+                <th>Email</th>
+                <th>Description</th>
+            
+                <th>Date reclamation</th>
+                <th>Type reclamation</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+       
+        {% for reclamation in reclamations %}
+            <tr>
+                <td>{{ reclamation.id }}</td>
+                <td>{{ reclamation.nom }}</td>
+                <td>{{ reclamation.prenom }}</td>
+                <td>{{ reclamation.email }}</td>
+                
+                <td>{{ reclamation.description }}</td>
+                <td>{{ reclamation.dateRec ? reclamation.dateRec|date('Y-m-d') : '' }}</td>
+                <td>{{ reclamation.typeRec }}</td>
+                <td>
+                    <a class="btn btn-secondary" href="{{ path('app_reclamation_show', {'id': reclamation.id}) }}">show</a>
+                    
+                    <td><a class="btn btn-success"href="{{ path('app_reclamation_edit', {'id': reclamation.id}) }}">edit</a>
+                     </td>
+                <td>    {{ include('reclamation/_delete_form.html.twig') }}
+                 </td>             
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a  href="{{ path('app_reclamation_index') }}" class="previous">&laquo;back to list</a>
+
+   <a class=' btn btn-primary rounded-pill' href="{{ path('app_reclamation_new') }}">Create new</a>
+
+{% endblock %}
