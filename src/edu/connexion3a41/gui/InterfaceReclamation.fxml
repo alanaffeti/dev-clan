@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="586.0" prefWidth="746.0" style="-fx-background-color: rose; -fx-background-image: ;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.connexion3a41.gui.InterfaceReclamationController">
+   <children>
+      <TextField fx:id="tfnom" layoutX="10.0" layoutY="145.0" promptText="Nom" />
+      <TextField fx:id="tfprenom" layoutX="10.0" layoutY="178.0" promptText="Prenom" />
+      <TextField fx:id="tfemail" layoutX="10.0" layoutY="211.0" promptText="EMAIL" />
+      <TextField fx:id="tfdescription" layoutX="14.0" layoutY="244.0" prefHeight="100.0" prefWidth="140.0" promptText="Description" />
+      <TableView fx:id="tvrec" layoutX="200.0" layoutY="70.0" onMouseClicked="#fillforum" prefHeight="473.0" prefWidth="523.0" stylesheets="@crudDesign.css">
+        <columns>
+          <TableColumn fx:id="col_id" prefWidth="40.0" text="id" />
+          <TableColumn fx:id="col_nom" prefWidth="68.0" text="nom" />
+            <TableColumn fx:id="col_prenom" prefWidth="72.0" text="prenom" />
+            <TableColumn fx:id="col_email" prefWidth="120.0" text="email" />
+            <TableColumn fx:id="col_description" prefWidth="155.0" text="description" />
+            <TableColumn fx:id="col_type" prefWidth="67.0" text="type" />
+        </columns>
+      </TableView>
+      <RadioButton fx:id="rbnormale" layoutX="29.0" layoutY="352.0" mnemonicParsing="false" text="Normale" />
+      <RadioButton fx:id="rbadmin" layoutX="29.0" layoutY="376.0" mnemonicParsing="false" text="Administrative" />
+      <Button fx:id="tf_add" layoutX="12.0" layoutY="416.0" mnemonicParsing="false" onAction="#add" prefHeight="30.0" prefWidth="140.0" styleClass="btn" stylesheets="@crudDesign.css" text="inserer" textFill="#171717">
+         <font>
+            <Font name="System Bold Italic" size="13.0" />
+         </font>
+      </Button>
+      <Button layoutX="12.0" layoutY="452.0" mnemonicParsing="false" onAction="#edit" prefHeight="30.0" prefWidth="140.0" styleClass="btn" stylesheets="@crudDesign.css" text="edit">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Button>
+      <Button defaultButton="true" layoutX="12.0" layoutY="489.0" mnemonicParsing="false" onAction="#delete" prefHeight="30.0" prefWidth="140.0" styleClass="btn" stylesheets="@crudDesign.css" text="supprimer">
+         <font>
+            <Font name="System Bold Italic" size="15.0" />
+         </font>
+      </Button>
+      <Button layoutX="12.0" layoutY="528.0" mnemonicParsing="false" onAction="#Refresh" prefHeight="30.0" prefWidth="140.0" styleClass="btn" stylesheets="@crudDesign.css" text="Refresh">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="219.0" fitWidth="213.0" layoutX="-10.0" layoutY="-74.0">
+         <image>
+            <Image url="@../../../../../Nouveau%20dossier/324461986_563713129117375_8804241847455962040_n.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="3.0" layoutY="84.0" prefHeight="45.0" prefWidth="190.0" text="Reclamation">
+         <font>
+            <Font name="System Bold Italic" size="28.0" />
+         </font>
+      </Label>
+      <TextField fx:id="tf_rech" layoutX="500.0" layoutY="23.0" />
+      <Button fx:id="tf_btnrech" layoutX="649.0" layoutY="23.0" mnemonicParsing="false" onAction="#rech" styleClass="btn" stylesheets="@crudDesign.css" text="RECHERCHE" />
+      <Button fx:id="tf_btnrech1" layoutX="342.0" layoutY="23.0" mnemonicParsing="false" onAction="#statistique" styleClass="btn" stylesheets="@crudDesign.css" text="Statistiques" />
+   </children>
+</AnchorPane>
