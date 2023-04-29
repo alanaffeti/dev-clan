@@ -7,9 +7,11 @@ package edu.JavaFxPidev.gui;
 
 import edu.JavaFxPidev.entities.Voiture;
 import edu.JavaFxPidev.services.VoitureCRUD;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
@@ -19,6 +21,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -37,6 +40,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 /**
@@ -47,6 +51,7 @@ import javafx.stage.Stage;
 public class AddvoitureController implements Initializable {
     
     VoitureCRUD voiture = new VoitureCRUD();
+
     @FXML
     private TextField marque_id;
     @FXML
@@ -98,6 +103,9 @@ public class AddvoitureController implements Initializable {
     private Button addcontratbtn;
     @FXML
     private BorderPane borderpane_id;
+    @FXML
+    private TextField recherche_id;
+                
 
     
     public void voitureEtatList() {
@@ -140,7 +148,10 @@ public class AddvoitureController implements Initializable {
         voitureEtatList();
         voitureTypeCarburantList();
         voitureTypeVoitureList();
+
         refreshList();
+                        recherche_avance();
+
 
 
     }
@@ -303,6 +314,9 @@ public class AddvoitureController implements Initializable {
         if(matricule_id.getText().trim().isEmpty()){
             erreur+="-matricule vide\n";
         }
+        else if(!matricule_id.getText().matches("^\\d{4}\\stunisie\\s\\d{3}$")) {
+    erreur+="-matricule doit être sous forme de YYYY tunisie XXX où YYYY est 4 chiffres et XXX est 3 chiffres.\n";
+}
         if(kilometrage_id.getText().trim().isEmpty()){
             erreur+="-kilometrage vide\n";
         }
@@ -323,7 +337,82 @@ public class AddvoitureController implements Initializable {
         return erreur;
     }
 
+//    @FXML
+//    private void handleFileChooserButtonAction(ActionEvent event) {
+//   FileChooser fileChooser = new FileChooser();
+//    fileChooser.setTitle("Select Image File");
+//    fileChooser.getExtensionFilters().addAll(
+//        new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg", "*.gif")
+//    );
+//    Stage fileChooserStage = new Stage();
+//    File selectedFile = fileChooser.showOpenDialog(fileChooserStage);    
+//    if (selectedFile != null) {
+//        String imageUrl = selectedFile.toURI().toString();
+//        System.out.println("Selected file: " + selectedFile.getPath());
+//        try {
+//            imageanalyse imageAnalysis = new imageanalyse(imageUrl);
+//            String year = imageAnalysis.getYear();
+//            String make = imageAnalysis.getMake();
+//            String model = imageAnalysis.getModel();
+//            System.out.println("Year: " + year);
+//            System.out.println("Make: " + make);
+//            System.out.println("Model: " + model);
+//            modele_id.setText(model);
+//            datefabrication_id.setValue(LocalDate.of(Integer.parseInt(year), 1, 1));
+//        } catch (Exception e) {
+//            System.err.println("Error analyzing image: " + e.getMessage());
+//            e.printStackTrace();
+//        }
+//    } 
+//    }}
+    public void recherche_avance(){
+        //remplire lobservablelist
+        data.clear();
+        data.addAll(voiture.display());
+        //liste filtrer
+        FilteredList<Voiture> filtreddata=new FilteredList<>(data,u->true);
+        //creation du listener a partir du textfield
+        recherche_id.textProperty().addListener((observable,oldValue,newValue)->{
+            filtreddata.setPredicate(voiture->{
+                if(newValue==null||newValue.isEmpty()){
+                    return true;
+                }
+                if(String.valueOf(voiture.getId()).indexOf(newValue)!=-1){
+                    return true;
+                }
+                else if(voiture.getMarque().indexOf(newValue)!=-1){
+                    return true;
+                }
+                
+                else if(voiture.getModele().indexOf(newValue)!=-1){
+                    return true;
+                }
+                else if(voiture.getMatricule().indexOf(newValue)!=-1){
+                    return true;
+                }
+                
+                else if(String.valueOf(voiture.getDatefabrication()).indexOf(newValue)!=-1){
+                    return true;
+                }
+                else if(String.valueOf(voiture.getKilometrage()).indexOf(newValue)!=-1){
+                    return true;
+                }
+                else if(String.valueOf(voiture.getTypecarburant()).indexOf(newValue)!=-1){
+                    return true;
+                }
+                 else if(String.valueOf(voiture.getTypevoiture()).indexOf(newValue)!=-1){
+                    return true;
+                }
+                 else if(String.valueOf(voiture.getEtat()).indexOf(newValue)!=-1){
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            });
+            table_id.setItems(filtreddata);
+        });
+    }
 
-    
     
 }

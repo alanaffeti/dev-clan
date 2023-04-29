@@ -106,6 +106,7 @@ public class VoitureCRUD implements EntityCRUD<Voiture> {
 
             Statement st = MyConnection.getInstance().getCnx()
                     .createStatement();
+            
             st.executeUpdate(query);
         } catch (SQLException ex) {
             Logger.getLogger(VoitureCRUD.class.getName()).log(Level.SEVERE, null, ex);
@@ -116,6 +117,35 @@ public class VoitureCRUD implements EntityCRUD<Voiture> {
     public List<Voiture> getContratsByVoitureId(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+      public  List<Object> getTitresEtDemandes() {
+    List<Object> resultat = new ArrayList<>();
+try {
+    String req = "SELECT voiture.typevoiture, COUNT(voiture.id) AS nombre_typevoiture\n" +
+                 "FROM voiture\n" +
+                 "LEFT JOIN voiture ON voiture.id = voiture.offre_id\n" +
+                 "GROUP BY voiture.id";
+    Statement st = MyConnection.getInstance().getCnx()
+                    .createStatement();
+            st.executeUpdate(req);
+ResultSet RS = st.executeQuery(req);
+    // Stockage des valeurs dans des listes
+    List<String> titres = new ArrayList<>();
+    List<Integer> demandes = new ArrayList<>();
+    while (RS.next()) {
+        String titreOffre = RS.getString("titre");
+        int nombreDemandes = RS.getInt("nombre_demandes");
+        titres.add(titreOffre);
+        demandes.add(nombreDemandes);
+    }
 
+    // Ajout des listes à la variable resultat
+    resultat.add(titres);
+    resultat.add(demandes);
+} catch (SQLException ex) {
+    System.out.println(ex.getMessage());
+}
+return resultat;
+    }
     
 }

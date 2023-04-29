@@ -153,5 +153,47 @@ public class ContratCRUD implements EntityCRUD<Contrat> {
         }
         return contrats;
     }
+    
+    public int nbtousrisques(){
+     String query="SELECT COUNT(*) FROM contrat WHERE type='Assurance tous risques' ";
+      
+      int nb =0;
+        
+        try {
+        	PreparedStatement pst = MyConnection.getInstance().getCnx()
+                    .prepareStatement(query);
+            ResultSet rs = pst.executeQuery();
+            while(rs.next()){
+             nb= rs.getInt(1);
+              System.out.println(nb);
+            }
+            
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return nb;
+    }
+    
+    public int nbvol(){
+     String query="SELECT COUNT(*) FROM contrat WHERE type='Assurance vol' ";
+      
+      int nb =0;
+        
+        try {
+        	PreparedStatement pst = MyConnection.getInstance().getCnx()
+                    .prepareStatement(query);
+            ResultSet rs = pst.executeQuery();
+            while(rs.next()){
+             nb= rs.getInt(1);
+              System.out.println(nb);
+            }
+            
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return nb;
+    }
+
+
 
 }

@@ -103,6 +103,7 @@
                               <DatePicker fx:id="datefin_id1" layoutX="15.0" layoutY="392.0" prefHeight="25.0" prefWidth="227.0" />
                               <TextField fx:id="prix_id" layoutX="16.0" layoutY="283.0" prefHeight="25.0" prefWidth="227.0" />
                               <Button fx:id="back" layoutX="190.0" layoutY="501.0" mnemonicParsing="false" onAction="#back" styleClass="btn" stylesheets="@crudDesign.css" text="&lt;back" />
+                              <Button fx:id="exportpdf_id" layoutX="253.0" layoutY="501.0" mnemonicParsing="false" onAction="#exportPdf" styleClass="btn" stylesheets="@crudDesign.css" text="PDF" />
                            </children>
                         </AnchorPane>
                      </children>
@@ -131,6 +132,8 @@
                                     <TableColumn fx:id="col_region" prefWidth="79.0" text="Region" />
                                  </columns>
                               </TableView>
+                              <TextField fx:id="rechercheC_id" layoutX="14.0" layoutY="14.0" prefHeight="25.0" prefWidth="431.0" promptText="Rechercher" />
+                              <Button fx:id="stat" layoutX="33.0" layoutY="488.0" mnemonicParsing="false" onAction="#stat" styleClass="btn" stylesheets="@crudDesign.css" text="Statistique" />
                            </children>
                         </AnchorPane>
                         <Separator layoutY="15.0" orientation="VERTICAL" prefHeight="571.0" prefWidth="0.0" />

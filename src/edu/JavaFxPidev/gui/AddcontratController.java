@@ -5,20 +5,31 @@
  */
 package edu.JavaFxPidev.gui;
 
+import static com.itextpdf.text.pdf.PdfName.C;
+import com.itextpdf.text.BadElementException;
+import com.itextpdf.text.DocumentException;
+
 import edu.JavaFxPidev.entities.Contrat;
 import edu.JavaFxPidev.entities.Voiture;
+import edu.JavaFxPidev.services.AutocompletionlTextField;
 import edu.JavaFxPidev.services.ContratCRUD;
+import edu.JavaFxPidev.services.PDFGenerator;
 import edu.JavaFxPidev.services.VoitureCRUD;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -35,6 +46,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import static javafx.scene.input.KeyCode.O;
+import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 /**
@@ -43,6 +57,12 @@ import javafx.stage.Stage;
  * @author Mouad
  */
 public class AddcontratController implements Initializable {
+
+    PDFGenerator pdf = new PDFGenerator();
+
+    private FileChooser fileChooser = new FileChooser();
+
+    private AutocompletionlTextField autocompletionlTextField;
 
     ContratCRUD contrat = new ContratCRUD();
 
@@ -95,6 +115,12 @@ public class AddcontratController implements Initializable {
     ObservableList<Contrat> data = FXCollections.observableArrayList();
     @FXML
     private Button back;
+    @FXML
+    private TextField rechercheC_id;
+    @FXML
+    private Button exportpdf_id;
+    @FXML
+    private Button stat;
 
     public void refreshList() {
         data.clear();
@@ -118,6 +144,7 @@ public class AddcontratController implements Initializable {
 
     public void setSelectedCar(Voiture voiture) {
         selectedvoiture = voiture;
+
     }
 
     private String[] typeList = {"Assurance responsabilité civile  ", "Assurance tous risques ", "Assurance collision", "Assurance vol ", "Assurance incendie "};
@@ -141,6 +168,14 @@ public class AddcontratController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+        autocompletionlTextField = new AutocompletionlTextField();
+        autocompletionlTextField.setupAutoCompletion(nom_id);
+        autocompletionlTextField.setupAutoCompletion(prenom_id);
+        autocompletionlTextField.setupAutoCompletion(cin_id);
+        autocompletionlTextField.setupAutoCompletion(region_id);
+        autocompletionlTextField.setupAutoCompletion(prix_id);
+
         contratTypeList();
         refreshList();
     }
@@ -154,43 +189,66 @@ public class AddcontratController implements Initializable {
             alert.setContentText(erreur);
             alert.showAndWait();
         } else {
-        Contrat v = new Contrat();
-        v.setVoiture_id(selectedvoiture.getId());
-        v.setNomconducteur(nom_id.getText());
-        v.setPrenomconducteur(prenom_id.getText());
+            Contrat v = new Contrat();
+            v.setVoiture_id(selectedvoiture.getId());
+            v.setNomconducteur(nom_id.getText());
+            v.setPrenomconducteur(prenom_id.getText());
 
-        // v.setTypevoiture((String) typevoiture_id.getSelectionModel().getSelectedItem());
-        v.setCin(Integer.valueOf(cin_id.getText()));
-        v.setRegion(region_id.getText());
-        v.setDatedebut(Date.valueOf(datedebut_id.getValue()));
-        v.setDatefin(Date.valueOf(datefin_id1.getValue()));
-        v.setPrix(Float.parseFloat(prix_id.getText()));
+            // v.setTypevoiture((String) typevoiture_id.getSelectionModel().getSelectedItem());
+            v.setCin(Integer.valueOf(cin_id.getText()));
+            v.setRegion(region_id.getText());
+            v.setDatedebut(Date.valueOf(datedebut_id.getValue()));
+            v.setDatefin(Date.valueOf(datefin_id1.getValue()));
+            v.setPrix(Float.parseFloat(prix_id.getText()));
 
-        v.setType((String) type_id.getSelectionModel().getSelectedItem());
+            v.setType((String) type_id.getSelectionModel().getSelectedItem());
 
 //
-        contrat.addEntity(v);
-        refreshList();
-    }
+            contrat.addEntity(v);
+            autocompletionlTextField.LearnWord(nom_id, nom_id.getText());
+            autocompletionlTextField.LearnWord(prenom_id, prenom_id.getText());
+
+            autocompletionlTextField.LearnWord(nom_id, nom_id.getText());
+
+            autocompletionlTextField.LearnWord(cin_id, cin_id.getText());
+
+            autocompletionlTextField.LearnWord(region_id, region_id.getText());
+
+            autocompletionlTextField.LearnWord(prix_id, prix_id.getText());
+
+            refreshList();
+
+            try {
+                FXMLLoader loader = new FXMLLoader(
+                        getClass().getResource("payment.fxml"));
+                Parent root = (Parent) loader.load();
+
+                Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                currentStage.setScene(new Scene(root));
+                refreshList();
+
+            } catch (IOException ex) {
+                System.out.println(ex.getMessage());
+            }
+
+        }
     }
 
     @FXML
     private void deletecontrat(ActionEvent event) {
         if (tablec_id.getSelectionModel().getSelectedItem() != null) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmation de suppression");
-        alert.setHeaderText(null);
-        alert.setContentText("Êtes-vous sûr de vouloir supprimer ce contrat ?");
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK)
-        {
-            int id = tablec_id.getSelectionModel().getSelectedItem().getId();
-            contrat.delete(id);
-            refreshList();
-        }
-            
-        }
-        else{
+            alert.setTitle("Confirmation de suppression");
+            alert.setHeaderText(null);
+            alert.setContentText("Êtes-vous sûr de vouloir supprimer ce contrat ?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                int id = tablec_id.getSelectionModel().getSelectedItem().getId();
+                contrat.delete(id);
+                refreshList();
+            }
+
+        } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Aucune voiture sélectionnée");
             alert.setHeaderText(null);
@@ -202,7 +260,7 @@ public class AddcontratController implements Initializable {
     @FXML
     private void updatecontrat(ActionEvent event) {
         if (tablec_id.getSelectionModel().getSelectedItem() != null) {
-            
+
             try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("updatecontrat.fxml"));
                 UpdatecontratController controller = new UpdatecontratController(tablec_id.getSelectionModel().getSelectedItem());
@@ -221,7 +279,7 @@ public class AddcontratController implements Initializable {
             }
 
         } else {
-           Alert alert = new Alert(Alert.AlertType.WARNING);
+            Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Aucune voiture sélectionnée");
             alert.setHeaderText(null);
             alert.setContentText("Veuillez sélectionner un contrat dans la table.");
@@ -246,64 +304,139 @@ public class AddcontratController implements Initializable {
         }
 
     }
-    
-    
-    
-     public String controleDeSaisie(){
-    String erreur = "";
-    
-    if (nom_id.getText().trim().isEmpty()) {
-        erreur += "- Nom vide\n";
-    } else if (!nom_id.getText().matches("^[a-zA-Z ]+$")) {
-        erreur += "- Nom ne doit contenir que des lettres et des espaces\n";
-    }
-    
-    if (prenom_id.getText().trim().isEmpty()) {
-        erreur += "- Prenom vide\n";
-    } else if (!prenom_id.getText().matches("^[a-zA-Z ]+$")) {
-        erreur += "- Prenom ne doit contenir que des lettres et des espaces\n";
-    }
-    
-    if (cin_id.getText().trim().isEmpty()) {
-        erreur += "- Carte d'identité vide\n";
-    } else if (!cin_id.getText().matches("^\\d{8}$")) {
-        erreur += "- carte d'identité doit contenir exactement 8 chiffres\n";
-    }
-    
-    if (region_id.getText().trim().isEmpty()) {
-        erreur += "- Region vide\n";
-    } else if (!region_id.getText().matches("^[a-zA-Z ]+$")) {
-        erreur += "- Region ne doit contenir que des lettres et des espaces\n";
-    }
-    
-    if (prix_id.getText().trim().isEmpty()) {
-        erreur += "- Prix vide\n";
-    } else if (!prix_id.getText().matches("^[1-9]*\\.?[1-9]+$")) {
-        erreur += "- Prix doit être un nombre positif\n";
-    }
-    
-    if (datedebut_id.getValue() == null) {
-        erreur += "- Date de début vide\n";
-    } else if (datedebut_id.getValue().isBefore(LocalDate.now())) {
-        erreur += "- Date de début doit être dans le futur\n";
-    }
-    
-    if (datefin_id1.getValue() == null) {
-        erreur += "- Date de fin vide\n";
-    } else if (datefin_id1.getValue().isBefore(LocalDate.now())) {
-        erreur += "- Date de fin doit être dans le futur\n";
-    }
-    
-    if (type_id.getValue() == null) {
-        erreur += "- Type de carburant vide\n";
-    }
-    
-    if(datedebut_id.getValue() != null && datefin_id1.getValue() != null){
-        if(datefin_id1.getValue().isBefore(datedebut_id.getValue())){
-            erreur+="-La date de fin doit être postérieure à la date de début\n";
+
+    public String controleDeSaisie() {
+        String erreur = "";
+
+        if (nom_id.getText().trim().isEmpty()) {
+            erreur += "- Nom vide\n";
+        } else if (!nom_id.getText().matches("^[a-zA-Z ]+$")) {
+            erreur += "- Nom ne doit contenir que des lettres et des espaces\n";
         }
+
+        if (prenom_id.getText().trim().isEmpty()) {
+            erreur += "- Prenom vide\n";
+        } else if (!prenom_id.getText().matches("^[a-zA-Z ]+$")) {
+            erreur += "- Prenom ne doit contenir que des lettres et des espaces\n";
+        }
+
+        if (cin_id.getText().trim().isEmpty()) {
+            erreur += "- Carte d'identité vide\n";
+        } else if (!cin_id.getText().matches("^\\d{8}$")) {
+            erreur += "- carte d'identité doit contenir exactement 8 chiffres\n";
+        }
+
+        if (region_id.getText().trim().isEmpty()) {
+            erreur += "- Region vide\n";
+        } else if (!region_id.getText().matches("^[a-zA-Z ]+$")) {
+            erreur += "- Region ne doit contenir que des lettres et des espaces\n";
+        }
+
+        if (prix_id.getText().trim().isEmpty()) {
+            erreur += "- Prix vide\n";
+        } else if (!prix_id.getText().matches("^[0-9]+(\\.[0-9]+)?$")) {
+            erreur += "- Prix doit être un nombre positif\n";
+        }
+
+        if (datedebut_id.getValue() == null) {
+            erreur += "- Date de début vide\n";
+        } else if (datedebut_id.getValue().isBefore(LocalDate.now())) {
+            erreur += "- Date de début doit être dans le futur\n";
+        }
+
+        if (datefin_id1.getValue() == null) {
+            erreur += "- Date de fin vide\n";
+        } else if (datefin_id1.getValue().isBefore(LocalDate.now())) {
+            erreur += "- Date de fin doit être dans le futur\n";
+        }
+
+        if (type_id.getValue() == null) {
+            erreur += "- Type de carburant vide\n";
+        }
+
+        if (datedebut_id.getValue() != null && datefin_id1.getValue() != null) {
+            if (datefin_id1.getValue().isBefore(datedebut_id.getValue())) {
+                erreur += "-La date de fin doit être postérieure à la date de début\n";
+            }
+        }
+
+        return erreur;
     }
-    
-    return erreur;
-}
+
+    public void recherche_avance() {
+        //remplire lobservablelist
+        data.clear();
+        data.addAll(contrat.display());
+        //liste filtrer
+        FilteredList<Contrat> filtreddata = new FilteredList<>(data, u -> true);
+        //creation du listener a partir du textfield
+        rechercheC_id.textProperty().addListener((observable, oldValue, newValue) -> {
+            filtreddata.setPredicate(contrat -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                if (String.valueOf(contrat.getId()).indexOf(newValue) != -1) {
+                    return true;
+                } else if (contrat.getRegion().indexOf(newValue) != -1) {
+                    return true;
+                } else if (contrat.getNomconducteur().indexOf(newValue) != -1) {
+                    return true;
+                } else if (contrat.getPrenomconducteur().indexOf(newValue) != -1) {
+                    return true;
+                } else if (String.valueOf(contrat.getDatedebut()).indexOf(newValue) != -1) {
+                    return true;
+                } else if (String.valueOf(contrat.getDatefin()).indexOf(newValue) != -1) {
+                    return true;
+                } else if (String.valueOf(contrat.getVoiture_id()).indexOf(newValue) != -1) {
+                    return true;
+                } else if (String.valueOf(contrat.getPrix()).indexOf(newValue) != -1) {
+                    return true;
+                } else if (String.valueOf(contrat.getType()).indexOf(newValue) != -1) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
+            tablec_id.setItems(filtreddata);
+        });
+    }
+
+    @FXML
+    private void exportPdf(ActionEvent event) throws FileNotFoundException, DocumentException {
+
+        if (tablec_id.getSelectionModel().getSelectedItem() != null) {
+            Contrat c = tablec_id.getSelectionModel().getSelectedItem();
+
+            try {
+                try {
+                    pdf.generatePdf("Contrat", c);
+                } catch (BadElementException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (DocumentException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            } catch (IOException ex) {
+                Logger.getLogger(AddcontratController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(AddcontratController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(AddcontratController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+    }
+
+    @FXML
+    private void stat(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("stats.fxml"));
+Parent root = loader.load();
+Scene scene = new Scene(root);
+Stage stage = new Stage();
+stage.setTitle("Stats");
+stage.setScene(scene);
+stage.show();
+    }
+
 }

@@ -68,7 +68,7 @@
                                     <Font size="13.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="matricule_id" layoutX="14.0" layoutY="169.0" prefHeight="25.0" prefWidth="227.0" />
+                              <TextField fx:id="matricule_id" layoutX="14.0" layoutY="169.0" prefHeight="25.0" prefWidth="227.0" promptText="Y YYY تونس XXX" />
                               <Label layoutX="14.0" layoutY="208.0" text="Kilometrage">
                                  <font>
                                     <Font size="13.0" />
@@ -130,6 +130,7 @@
                                 </columns>
                               </TableView>
                               <Button fx:id="addcontratbtn" layoutX="14.0" layoutY="490.0" mnemonicParsing="false" onAction="#addcontrat" styleClass="btn" stylesheets="@crudDesign.css" text="Add a contrat" />
+                              <TextField fx:id="recherche_id" layoutX="14.0" layoutY="21.0" prefHeight="25.0" prefWidth="424.0" promptText="Rechercher" />
                            </children>
                         </AnchorPane>
                         <Separator layoutY="15.0" orientation="VERTICAL" prefHeight="571.0" prefWidth="0.0" />
