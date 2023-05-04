@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="751.0" prefWidth="1277.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.PiJAva.interfaces.InterfaceConstatController">
+   <children>
+      <AnchorPane layoutX="1.0" opacity="0.53" prefHeight="82.0" prefWidth="1275.0" style="-fx-background-color: #FEFEFE;">
+         <children>
+            <ImageView fitHeight="27.0" fitWidth="168.0" layoutX="14.0" layoutY="18.0">
+               <image>
+                  <Image url="@../../../IMAGES/logo.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="14.0" layoutY="-23.0" opacity="0.75" prefHeight="751.0" prefWidth="280.0">
+         <children>
+            <Button layoutX="25.0" layoutY="312.0" mnemonicParsing="false" onAction="#Dashbord" prefHeight="26.0" prefWidth="230.0" styleClass="btn" stylesheets="@crudDesign.css" text="Dashbord" textFill="#012970" />
+            <Button layoutX="20.0" layoutY="371.0" mnemonicParsing="false" onAction="#DepotConstat" prefHeight="26.0" prefWidth="230.0" style="-fx-background-color: #3a4b68;" styleClass="btn" stylesheets="@crudDesign.css" text="Dépot Constat" textFill="WHITE">
+               <font>
+                  <Font name="Arial" size="15.0" />
+               </font>
+            </Button>
+            <Button layoutX="15.0" layoutY="438.0" mnemonicParsing="false" onAction="#Facture" prefHeight="26.0" prefWidth="238.0" styleClass="btn" stylesheets="@crudDesign.css" text="Facture" textFill="#012970" />
+            <Button layoutX="25.0" layoutY="252.0" mnemonicParsing="false" onAction="#Profile" prefHeight="26.0" prefWidth="230.0" styleClass="btn" stylesheets="@crudDesign.css" text="Profile" textFill="#012970" />
+            <Button layoutX="15.0" layoutY="502.0" mnemonicParsing="false" onAction="#Reclamation" prefHeight="26.0" prefWidth="238.0" styleClass="btn" stylesheets="@crudDesign.css" text="Réclamation" textFill="#012970" />
+            <Button layoutX="15.0" layoutY="572.0" mnemonicParsing="false" onAction="#ListUser" prefHeight="30.0" prefWidth="238.0" styleClass="btn" stylesheets="@crudDesign.css" text="List of users" textFill="#012970" />
+         </children>
+      </AnchorPane>
+      <DatePicker fx:id="dpdate" layoutX="288.0" layoutY="529.0" promptText="Date " />
+      <TextField fx:id="tflieu" layoutX="288.0" layoutY="423.0" promptText="lieu" />
+      <TextField fx:id="tfmatricule" layoutX="288.0" layoutY="478.0" promptText="matricule" />
+      <TextField fx:id="tfprenom" layoutX="288.0" layoutY="380.0" promptText="Prenom" />
+      <TextField fx:id="tfnom" layoutX="288.0" layoutY="340.0" promptText="Nom" />
+      <TableView fx:id="tvuser" layoutX="494.0" layoutY="145.0" opacity="0.8" prefHeight="481.0" prefWidth="783.0" style="-fx-background-color: #FEFEFE; -fx-border-color: #012970;" stylesheets="@crudDesign.css">
+         <columns>
+            <TableColumn fx:id="cnom" prefWidth="77.0" text="Nom" />
+            <TableColumn fx:id="cprenom" prefWidth="113.0" text="Prenom" />
+            <TableColumn fx:id="clieu" prefWidth="259.0" text="lieu" />
+            <TableColumn fx:id="cmatricule" prefWidth="190.0" text="matricule" />
+            <TableColumn fx:id="cdate" prefWidth="190.0" text="date" />
+         </columns>
+      </TableView>
+      <Button layoutX="521.0" layoutY="643.0" mnemonicParsing="false" onAction="#supprimer" style="-fx-background-radius: 15;" styleClass="btn" stylesheets="@crudDesign.css" text="Supprimer" />
+      <Button layoutX="414.0" layoutY="583.0" mnemonicParsing="false" onAction="#modifier" style="-fx-background-radius: 15;" styleClass="btn" stylesheets="@crudDesign.css" text="Modifier" />
+      <Button layoutX="288.0" layoutY="583.0" mnemonicParsing="false" onAction="#ajouter" style="-fx-background-radius: 15;" styleClass="btn" stylesheets="@crudDesign.css" text="Ajouter" />
+      <Button layoutX="773.0" layoutY="101.0" mnemonicParsing="false" onAction="#resfreshuser" prefHeight="31.0" prefWidth="138.0" style="-fx-background-radius: 10;" styleClass="btn" stylesheets="@crudDesign.css" text="Refresh" textFill="#012970">
+         <font>
+            <Font name="Arial" size="15.0" />
+         </font>
+      </Button>
+      <Button layoutX="304.0" layoutY="292.0" mnemonicParsing="false" onAction="#uploadsiguppic" prefHeight="27.0" prefWidth="175.0" style="-fx-background-radius: 10;" styleClass="btn" stylesheets="@crudDesign.css" text="choose file">
+         <font>
+            <Font name="Arial" size="15.0" />
+         </font>
+      </Button>
+      <Rectangle fx:id="imgconsta" arcHeight="5.0" arcWidth="5.0" fill="#dee3e8" height="197.0" layoutX="280.0" layoutY="85.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+      <Button fx:id="pdf" layoutX="615.0" layoutY="643.0" mnemonicParsing="false" onAction="#generatePDF" style="-fx-background-radius: 15;" styleClass="btn" stylesheets="@crudDesign.css" text="Imprimer" />
+      <TextField fx:id="search" layoutX="508.0" layoutY="104.0" onAction="#recherche" prefHeight="25.0" prefWidth="170.0" promptText="chercher" styleClass="search" stylesheets="@Backdesign.css" />
+      <Button fx:id="clear" layoutX="345.0" layoutY="618.0" mnemonicParsing="false" onAction="#clear" prefHeight="25.0" prefWidth="65.0" style="-fx-background-radius: 15;" styleClass="btn" stylesheets="@crudDesign.css" text="Clear" />
+      <Button fx:id="qr" layoutX="696.0" layoutY="643.0" mnemonicParsing="false" onAction="#generateQR" prefHeight="25.0" prefWidth="72.0" style="-fx-background-radius: 15;" styleClass="btn" stylesheets="@crudDesign.css" text="QR" />
+      <ImageView fx:id="qrCodeImageView" fitHeight="90.0" fitWidth="100.0" layoutX="827.0" layoutY="643.0" pickOnBounds="true" preserveRatio="true" />
+      
+   </children>
+</AnchorPane>

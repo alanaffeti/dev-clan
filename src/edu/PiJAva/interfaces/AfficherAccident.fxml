@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+
+<AnchorPane id="AnchorPane" prefHeight="715.0" prefWidth="1258.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.PiJAva.interfaces.AfficherAccidentController">
+   <children>
+      <TableView fx:id="listaccident" layoutX="784.0" layoutY="120.0" prefHeight="526.0" prefWidth="445.0" stylesheets="@crudDesign22.css">
+         <columns>
+            <TableColumn fx:id="col_id" prefWidth="75.0" text="Id" />
+            <TableColumn fx:id="col_nomclient" prefWidth="119.0" text="nom_client" />
+            <TableColumn fx:id="col_prenomclient" prefWidth="121.0" text="prenom_client" />
+            <TableColumn fx:id="col_matricule" prefWidth="127.0" text="matricule" />
+         </columns>
+      </TableView>
+      <Button fx:id="tfrefresh" layoutX="1149.0" layoutY="92.0" mnemonicParsing="false" onAction="#Actualiser_Liste" styleClass="btn" stylesheets="@crudDesign22.css" text="Actualiser" />
+      <Button fx:id="tfmodifier" layoutX="934.0" layoutY="92.0" mnemonicParsing="false" onAction="#modifier_acc" styleClass="btn" stylesheets="@crudDesign22.css" text="Modifier Accident" />
+      <Button fx:id="tfajout" layoutX="784.0" layoutY="92.0" mnemonicParsing="false" onAction="#Ajoutaccident" styleClass="btn" stylesheets="@crudDesign22.css" text="Ajouter Un Accident" />
+      <Button fx:id="tfdelete" layoutX="808.0" layoutY="658.0" mnemonicParsing="false" onAction="#supprimer" prefHeight="31.0" prefWidth="171.0" styleClass="btn" stylesheets="@crudDesign22.css" text="Supprimer Accident" />
+      <Button fx:id="btnimport5" layoutX="290.0" layoutY="661.0" mnemonicParsing="false" onAction="#impo5" styleClass="btn" stylesheets="@crudDesign22.css" text="Image_nouveaux_pieces" />
+      <Button fx:id="btnimport4" layoutX="68.0" layoutY="661.0" mnemonicParsing="false" onAction="#impo4" styleClass="btn" stylesheets="@crudDesign22.css" text="Facture_reparation" />
+      <Button fx:id="btnimport3" layoutX="561.0" layoutY="370.0" mnemonicParsing="false" onAction="#impo3" styleClass="btn" stylesheets="@crudDesign22.css" text="image_pieces_endomagees" />
+      <Button fx:id="btnimport2" layoutX="290.0" layoutY="370.0" mnemonicParsing="false" onAction="#impo2" styleClass="btn" stylesheets="@crudDesign22.css" text="Image_voiture_accidentee" />
+      <Button fx:id="btnimport1" layoutX="54.0" layoutY="370.0" mnemonicParsing="false" onAction="#impo1" styleClass="btn" stylesheets="@crudDesign22.css" text="Image Voiture_reparee" />
+      <TextField fx:id="tfmatricule" layoutX="341.0" layoutY="118.0" promptText="matricule_voiture" />
+      <TextField fx:id="tfprenom" layoutX="341.0" layoutY="83.0" promptText="prenom_client" />
+      <TextField fx:id="tfnom" layoutX="341.0" layoutY="49.0" promptText="nom_client" />
+      <Label layoutX="292.0" layoutY="53.0" text="Nom" />
+      <Label layoutX="292.0" layoutY="87.0" text="Prenom" />
+      <Label layoutX="246.0" layoutY="122.0" text="Matricule_voiture" />
+      <Rectangle fx:id="img1" arcHeight="5.0" arcWidth="5.0" fill="#5293b9" height="108.0" layoutX="68.0" layoutY="221.0" stroke="BLACK" strokeType="INSIDE" width="109.0" />
+      <Rectangle fx:id="img3" arcHeight="5.0" arcWidth="5.0" fill="#5293b9" height="108.0" layoutX="587.0" layoutY="227.0" stroke="BLACK" strokeType="INSIDE" width="109.0" />
+      <Rectangle fx:id="img5" arcHeight="5.0" arcWidth="5.0" fill="#5293b9" height="108.0" layoutX="312.0" layoutY="537.0" stroke="BLACK" strokeType="INSIDE" width="109.0" />
+      <Rectangle fx:id="img2" arcHeight="5.0" arcWidth="5.0" fill="#5293b9" height="108.0" layoutX="325.0" layoutY="221.0" stroke="BLACK" strokeType="INSIDE" width="109.0" />
+      <Rectangle fx:id="img4" arcHeight="5.0" arcWidth="5.0" fill="#5293b9" height="108.0" layoutX="68.0" layoutY="537.0" stroke="BLACK" strokeType="INSIDE" width="109.0" />
+      <TextField fx:id="tfrecherche" layoutX="811.0" layoutY="46.0" prefHeight="31.0" prefWidth="358.0" promptText="Rechercher..." style="-fx-background-radius: 50;" />
+      <ImageView fitHeight="35.0" fitWidth="200.0" layoutX="12.0" layoutY="20.0">
+         <image>
+            <Image url="@../../../IMAGES/logo.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>

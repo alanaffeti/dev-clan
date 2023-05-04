@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="535.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.PiJAva.interfaces.InterfaceReponseController">
+   <children>
+      <TableView fx:id="tvrep" layoutX="217.0" layoutY="84.0" prefHeight="200.0" prefWidth="302.0" stylesheets="@crudDesign.css">
+        <columns>
+          <TableColumn fx:id="col_id" prefWidth="75.0" text="id" />
+          <TableColumn fx:id="col_nom" prefWidth="75.0" text="Nom" />
+            <TableColumn fx:id="col_prenom" prefWidth="75.0" text="Prenom " />
+            <TableColumn fx:id="col_type" prefWidth="75.0" text="Type" />
+        </columns>
+      </TableView>
+      <Button fx:id="tf_add" layoutX="22.0" layoutY="338.0" mnemonicParsing="false" onAction="#add" prefHeight="30.0" prefWidth="140.0" styleClass="btn" stylesheets="@crudDesign.css" text="inserer" textFill="#171717">
+         <font>
+            <Font name="System Bold Italic" size="13.0" />
+         </font>
+      </Button>
+      <Button layoutX="22.0" layoutY="380.0" mnemonicParsing="false" onAction="#edit" prefHeight="30.0" prefWidth="140.0" styleClass="btn" stylesheets="@crudDesign.css" text="edit">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Button>
+      <Button defaultButton="true" layoutX="22.0" layoutY="428.0" mnemonicParsing="false" onAction="#delete" prefHeight="30.0" prefWidth="140.0" styleClass="btn" stylesheets="@crudDesign.css" text="supprimer">
+         <font>
+            <Font name="System Bold Italic" size="15.0" />
+         </font>
+      </Button>
+      <Button layoutX="22.0" layoutY="477.0" mnemonicParsing="false" onAction="#Refresh" prefHeight="30.0" prefWidth="140.0" styleClass="btn" stylesheets="@crudDesign.css" text="Refresh">
+         <font>
+            <Font name="System Bold Italic" size="14.0" />
+         </font>
+      </Button>
+      <ImageView fitHeight="219.0" fitWidth="213.0" layoutX="-9.0" layoutY="-58.0">
+         <image>
+            <Image url="@../../../../../Nouveau%20dossier/324461986_563713129117375_8804241847455962040_n.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="2.0" layoutY="116.0" prefHeight="45.0" prefWidth="190.0" text="   Reponse">
+         <font>
+            <Font name="System Bold Italic" size="28.0" />
+         </font>
+      </Label>
+      <RadioButton fx:id="rbnormale" layoutX="30.0" layoutY="255.0" mnemonicParsing="false" text="traité " />
+      <RadioButton fx:id="rbadmin" layoutX="30.0" layoutY="290.0" mnemonicParsing="false" text="non traité" />
+      <TextField fx:id="tfnom" layoutX="18.0" layoutY="184.0" promptText="Nom" />
+      <TextField fx:id="tfprenom" layoutX="20.0" layoutY="219.0" promptText="Prenom" />
+      <Button fx:id="backr" layoutX="173.0" layoutY="338.0" mnemonicParsing="false" onAction="#backr" text="&lt;" />
+   </children>
+</AnchorPane>

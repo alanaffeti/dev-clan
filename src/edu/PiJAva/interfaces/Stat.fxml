@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="edu.PiJAva.interfaces.StatController">
+   <children>
+      <Label layoutX="400.0" layoutY="49.0" text="Statistiques sur les reclamations">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <PieChart fx:id="statistique" layoutX="104.0" layoutY="107.0" prefHeight="367.0" prefWidth="1000" />
+   </children>
+</AnchorPane>

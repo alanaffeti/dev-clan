@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Light.Distant?>
+<?import javafx.scene.effect.Lighting?>
+<?import javafx.scene.effect.Shadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="595.0" prefWidth="355.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane layoutX="24.0" layoutY="24.0" prefHeight="571.0" prefWidth="315.0" stylesheets="@crudDesign.css">
+         <styleClass>
+            <String fx:value="white-form" />
+            <String fx:value="border" />
+         </styleClass>
+         <children>
+            <Label layoutX="80.0" layoutY="14.0" text="Modifier le informations" textFill="#757575">
+               <font>
+                  <Font name="MT Extra" size="15.0" />
+               </font>
+               <effect>
+                  <Lighting>
+                     <bumpInput>
+                        <Shadow />
+                     </bumpInput>
+                     <light>
+                        <Light.Distant>
+                           <color>
+                              <Color red="0.7368420958518982" green="0.7368420958518982" blue="0.7368420958518982" />
+                           </color>
+                        </Light.Distant>
+                     </light>
+                  </Lighting>
+               </effect>
+            </Label>
+            <Label layoutX="14.0" layoutY="42.0" text="Marque">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <TextField fx:id="umarque_id" layoutX="14.0" layoutY="61.0" prefHeight="25.0" prefWidth="227.0" />
+            <Label layoutX="14.0" layoutY="95.0" text="Modèle">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <TextField fx:id="umodele_id" layoutX="14.0" layoutY="114.0" prefHeight="25.0" prefWidth="227.0" />
+            <Label layoutX="14.0" layoutY="150.0" text="Matricule">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <TextField fx:id="umatricule_id" layoutX="14.0" layoutY="169.0" prefHeight="25.0" prefWidth="227.0" />
+            <Label layoutX="14.0" layoutY="208.0" text="Kilometrage">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <TextField fx:id="ukilometrage_id" layoutX="14.0" layoutY="227.0" prefHeight="25.0" prefWidth="227.0" />
+            <Label layoutX="14.0" layoutY="265.0" text="Date de fabrication">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="322.0" text="Etat">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="374.0" text="Type carburant">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <Label layoutX="14.0" layoutY="425.0" text="Type voiture">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="uetat_id" layoutX="13.0" layoutY="341.0" prefHeight="25.0" prefWidth="231.0" promptText="Choose." />
+            <ComboBox fx:id="utypecarburant_id" layoutX="15.0" layoutY="393.0" prefHeight="25.0" prefWidth="228.0" promptText="Choose." />
+            <DatePicker fx:id="udatefabrication_id" layoutX="14.0" layoutY="284.0" prefHeight="25.0" prefWidth="227.0" />
+            <Button fx:id="updatebtn" layoutX="128.0" layoutY="498.0" mnemonicParsing="false" onAction="#updatevoiture" styleClass="btn" stylesheets="@crudDesign.css" text="save" />
+            <ComboBox fx:id="utypevoiture_id" layoutX="15.0" layoutY="444.0" prefHeight="25.0" prefWidth="228.0" promptText="Choose." />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

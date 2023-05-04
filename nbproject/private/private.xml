@@ -3,10 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/DELL/OneDrive/Documents/NetBeansProjects/Pidev/src/Entities/Facture.java</file>
-            <file>file:/C:/Users/DELL/OneDrive/Documents/NetBeansProjects/Pidev/src/Connexion/Dbconnect.java</file>
-            <file>file:/C:/Users/DELL/OneDrive/Documents/NetBeansProjects/Pidev/src/Gui/AjoutfactureController.java</file>
-            <file>file:/C:/Users/DELL/OneDrive/Documents/NetBeansProjects/Pidev/src/Gui/FactureController.java</file>
+            <file>file:/C:/Users/21694/Desktop/Java/PiJavaEmna/src/edu/PiJAva/services/PersonneCRUD.java</file>
+            <file>file:/C:/Users/21694/Desktop/Java/PiJavaEmna/src/edu/PiJAva/services/AutocompletionlTextField.java</file>
+            <file>file:/C:/Users/21694/Desktop/Java/PiJavaEmna/src/edu/PiJAva/interfaces/InterfaceReclamationController.java</file>
+            <file>file:/C:/Users/21694/Desktop/Java/PiJavaEmna/src/edu/PiJAva/services/ContratCRUD.java</file>
+            <file>file:/C:/Users/21694/Desktop/Java/PiJavaEmna/src/edu/PiJAva/entities/Rec.java</file>
+            <file>file:/C:/Users/21694/Desktop/Java/PiJavaEmna/src/edu/PiJAva/entities/Rep.java</file>
+            <file>file:/C:/Users/21694/Desktop/Java/PiJavaEmna/src/edu/PiJAva/services/EntityCRUD.java</file>
+            <file>file:/C:/Users/21694/Desktop/Java/PiJavaEmna/src/edu/PiJAva/tools/SmsAPI1.java</file>
+            <file>file:/C:/Users/21694/Desktop/Java/PiJavaEmna/src/edu/PiJAva/interfaces/InterfaceReponseController.java</file>
+            <file>file:/C:/Users/21694/Desktop/Java/PiJavaEmna/src/edu/PiJAva/interfaces/StatController.java</file>
+            <file>file:/C:/Users/21694/Desktop/Java/PiJavaEmna/src/edu/PiJAva/services/Reponse.java</file>
         </group>
     </open-files>
 </project-private>
