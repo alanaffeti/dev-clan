@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+	<style>
+		.centerni {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 200px;
+			border: 3px solid green;
+		}
+		.button {
+			background-color: #4CAF50; /* Green */
+			border: none;
+			color: white;
+			padding: 16px 30.5px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 16px;
+			margin: 4px 0.5px;
+			transition-duration: 0.4s;
+			cursor: pointer;
+		}
+
+		.button1 {
+			background-color: white;
+			color: black;
+			width: 25%;
+			border: 0.5px solid #4CAF50;
+		}
+		.button-group {
+			display: inline-block;
+		}
+
+		.button1:hover {
+			background-color: #4CAF50;
+			color: white;
+		}
+	</style>
+	<link
+	rel="stylesheet" href="{{asset ('assets2/plugins/fullcalendar/fullcalendar.min.css')}}">
+	<!-- doccure/profile-settings.html  30 Nov 2019 04:12:18 GMT -->
+	{% block head %}
+		<head>
+			<meta charset="utf-8">
+
+			<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+			<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.css" integrity="sha256-uq9PNlMzB+1h01Ij9cx7zeE2OR2pLAfRw3uUUOOPKdA=" crossorigin="anonymous">
+			{% block stylesheets %}{% endblock %}
+			<!-- Favicons -->
+			<link
+			href="{{asset ('assets2/img/logo1.png')}} " rel="icon">
+
+			<!-- Bootstrap CSS -->
+			<link
+			rel="stylesheet" href="{{asset ('assets2/css/bootstrap.min.css')}} ">
+
+			<!-- Fontawesome CSS -->
+			<link rel="stylesheet" href="{{asset ('assets2/plugins/fontawesome/css/fontawesome.min.css')}} ">
+			<link
+			rel="stylesheet" href="{{asset ('assets2/plugins/fontawesome/css/all.min.css')}} ">
+
+			<!-- Main CSS -->
+			<link rel="stylesheet" href="{{asset ('assets2/css/style.css')}} ">
+
+
+		</head>
+	{% endblock %}
+	<body>
+
+		<!-- Main Wrapper -->
+		<div class="main-wrapper">
+			{% block header %}
+				<!-- Header -->
+				<header class="header">
+					<nav class="navbar navbar-expand-lg header-nav">
+						<div class="navbar-header">
+							<a id="mobile_btn" href="javascript:void(0);">
+								<span class="bar-icon">
+									<span></span>
+									<span></span>
+									<span></span>
+								</span>
+							</a>
+							
+						</div>
+						<div class="main-menu-wrapper">
+							<div class="menu-header">
+								<a href="index-2.html" class="menu-logo">
+									<img src="{{asset('assets2/img/logo2.png')}} " class="img-fluid" alt="Logo">
+								</a>
+								<a id="menu_close" class="menu-close" href="javascript:void(0);">
+									<i class="fas fa-times"></i>
+								</a>
+							</div>
+							{% if 'ROLE_PATIENT' in app.user.roles %}
+								<ul class="main-nav">
+									<li class="has-submenu">
+										<a href="{{path ('app_patient_index')}}">Accueil</a>
+									</li>
+									<li class="has-submenu">
+										<a href="{{ path('app_patient') }}">Rechercher un médecin</a>
+									</li>
+									<li class="has-submenu">
+										<a href="para.html">Parapharmacie</a>
+									</li>
+									<li class="has-submenu">
+										<a href="{{path ('app_addReclamation')}}">Reclamation</a>
+									</li>
+									<li class="has-submenu">
+										<a href="{{path ('app_question_index')}}">Forum</a>
+									</li>
+									<li class="has-submenu">
+										<a href="{{path ('user_profile')}}">profile</a>
+									</li>
+
+									<li class="login-link">
+										<a href="login.html">Se déconnecter</a>
+									</li>
+								</ul>
+							</div>
+							<ul class="nav header-navbar-rht">
+								<li class="nav-item contact-item">
+									<div class="header-contact-img">
+										<i class="far fa-hospital"></i>
+									</div>
+									<div class="header-contact-detail">
+										<p class="contact-header">Contact</p>
+										<p class="contact-info-header">
+											+216 55 676 837</p>
+									</div>
+								</li>
+							{% elseif 'ROLE_DOCTOR' in app.user.roles %}
+								<ul class="main-nav"></ul>
+							</div>
+							<ul class="nav header-navbar-rht">
+								<li class="nav-item contact-item">
+									<div class="header-contact-img">
+										<i class="far fa-hospital"></i>
+									</div>
+									<div class="header-contact-detail">
+										<p class="contact-header">Contact</p>
+										<p class="contact-info-header">
+											+216 55 676 837</p>
+									</div>
+								</li>
+							{% elseif 'ROLE_PARA' in app.user.roles %}
+								<ul class="main-nav"></ul>
+							</div>
+							<ul class="nav header-navbar-rht">
+								<li class="nav-item contact-item">
+									<div class="header-contact-img">
+										<i class="far fa-hospital"></i>
+									</div>
+									<div class="header-contact-detail">
+										<p class="contact-header">Contact</p>
+										<p class="contact-info-header">
+											+216 55 676 837</p>
+									</div>
+								</li>
+							{% endif %}
+							{% block Usermenu %}
+								<li class="nav-item dropdown has-arrow logged-item">
+									<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+										<span class="user-img">
+											<img class="rounded-circle" src="{{asset ('assets2/img/patients/patient.jpg')}} " width="31" alt="Ryan Taylor">
+										</span>
+										{% if app.user != null %}
+											<span class="user-text">
+												<h6>{{app.user.username}}</h6>
+
+											</span>
+										{% endif %}
+									</a>
+									<div class="dropdown-menu dropdown-menu-right">
+										<div class="user-header">
+											<div class="avatar avatar-sm">
+												<img src="{{asset ('assets2/img/patients/patient.jpg')}}" alt="User Image" class="avatar-img rounded-circle">
+											</div>
+											<div class="user-text">
+												{% if app.user != null %}
+													<span class="user-text">
+														<h6>{{app.user.username}}</h6>
+
+													</span>
+												{% endif %}
+
+											</div>
+										</div>
+										<a class="dropdown-item" href="patient-dashboard.html">Dashboard</a>
+										<a class="dropdown-item" href="profile-settings.html">Profile Settings</a>
+										<a class="dropdown-item" href=" {{path ('app_logout')}}">Se déconnecter</a>
+									</div>
+								</li>
+							{% endblock %}
+							<!-- /User Menu -->
+
+						</ul>
+					</nav>
+				</header>
+			{% endblock %}
+		
+
+			<!-- /Header -->
+			{% block breadcrumb %}
+				<!-- Breadcrumb -->
+
+			{% endblock %}
+			<!-- /Breadcrumb -->
+
+			<!-- Page Content -->
+			{% block body %}{% endblock %}
+		</div>
+		<!-- /Page Content -->
+		
+{% block footer %}
+
+        <div class="footer-top">
+            <div class="container">
+                <div class="row gy-4">
+                    <div class="col-lg-5 col-md-12 footer-info">
+                        <a href="index.html" class="logo d-flex align-items-center">
+                            <img src="{{asset('asset1/img/logo.png')}}" alt="">
+                            <span>Assurensea</span>
+                        </a>
+                      <!--  <p>Cras fermentum odio eu feugiat lide par naso tierra. Justo eget nada terra videa magna derita valies darta donna mare fermentum iaculis eu non diam phasellus.</p>-->
+                        <div class="social-links mt-3">
+                            <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+                            <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+                            <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+                            <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                        </div>
+                    </div>
+
+                    <!--<div class="col-lg-2 col-6 footer-links">
+                        <h4>Useful Links</h4>
+                        <ul>
+                            <li><i class="bi bi-chevron-right"></i> <a href="#">Home</a></li>
+                            <li><i class="bi bi-chevron-right"></i> <a href="#">About us</a></li>
+                            <li><i class="bi bi-chevron-right"></i> <a href="#">Services</a></li>
+                            <li><i class="bi bi-chevron-right"></i> <a href="#">Terms of service</a></li>
+                            <li><i class="bi bi-chevron-right"></i> <a href="#">Privacy policy</a></li>
+                        </ul>
+                    </div>-->
+
+                   <!-- <div class="col-lg-2 col-6 footer-links">
+                        <h4>Our Services</h4>
+                        <ul>
+                            <li><i class="bi bi-chevron-right"></i> <a href="#">Web Design</a></li>
+                            <li><i class="bi bi-chevron-right"></i> <a href="#">Web Development</a></li>
+                            <li><i class="bi bi-chevron-right"></i> <a href="#">Product Management</a></li>
+                            <li><i class="bi bi-chevron-right"></i> <a href="#">Marketing</a></li>
+                            <li><i class="bi bi-chevron-right"></i> <a href="#">Graphic Design</a></li>
+                        </ul>
+                    </div>-->
+
+                    <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
+                        <h4>Contact Us</h4>
+                        <p>
+                            Esprit <br>
+                            tunis, 2028<br>
+                            tunisia <br><br>
+                            <strong>Phone:</strong> +216 55 895 548<br>
+                            <strong>Email:</strong> assurensea.contact@gmail.com<br>
+                        </p>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="copyright">
+                &copy; Copyright <strong><span>Assurensea</span></strong>. All Rights Reserved
+            </div>
+            <div class="credits">
+                <!-- All the links in the footer should remain intact. -->
+                <!-- You can delete the links only if you purchased the pro version. -->
+                <!-- Licensing information: https://bootstrapmade.com/license/ -->
+                <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/Assurensea-bootstrap-startup-template/ -->
+                Designed by Dev clan
+            </div>
+        </div>
+    </footer><!-- End Footer -->
+
+{% endblock %}
+		<!-- /Footer -->
+	</body>
+</html></div><!-- /Main Wrapper --><!-- jQuery --><script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.0/main.min.js" integrity="sha256-DBxkGZLxKsLKhz054qUpBqtotG00r9AELGpSigJujLg=" crossorigin="anonymous"></script>{% block javascripts %}{% endblock %}<script src="assets/js/jquery.min.js"></script><!-- Bootstrap Core JS --><script src="assets/js/popper.min.js"></script><script src="assets/js/bootstrap.min.js"></script><!-- Select2 JS --><script src="assets/plugins/select2/js/select2.min.js"></script><!-- Datetimepicker JS --><script src="assets/js/moment.min.js"></script><script src="assets/js/bootstrap-datetimepicker.min.js"></script><!-- Sticky Sidebar JS --><script src="assets/plugins/theia-sticky-sidebar/ResizeSensor.js"></script><script src="assets/plugins/theia-sticky-sidebar/theia-sticky-sidebar.js"></script><!-- Custom JS --><script src="assets/js/script.js"></script></body><!-- doccure/profile-settings.html  30 Nov 2019 04:12:18 GMT --></html>

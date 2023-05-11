@@ -1,0 +1,26 @@
+{% extends 'baseM1.html.twig' %}
+
+{% block body %}
+    <h2>Modify Voiture</h2>
+
+    {{ form_start(f) }}
+    {{ form_row(f.marque) }}
+    {{ form_row(f.typevoiture) }}
+    {{ form_row(f.matricule) }}
+    {{ form_row(f.modele) }}
+    {{ form_row(f.datefabrication) }}
+    {{ form_row(f.typecarburant) }}
+    {{ form_row(f.kilometrage) }}
+    {{ form_row(f.etat) }}
+
+    <h3>Contrats</h3>
+    {% for data in contrats %}
+    <div class="row">
+        {{ form_row(data) }}
+        
+    </div>
+    {% endfor %}
+
+    <button type="submit" class="btn btn-primary">Save Voiture and Contrats</button>
+    {{ form_end(f) }}
+{% endblock %}

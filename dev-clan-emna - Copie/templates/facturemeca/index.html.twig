@@ -1,0 +1,63 @@
+{% extends 'base5.html.twig' %}
+
+{% block title %}Facture index{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h2 class="text-center mt-5 mb-3">Factures Reparation</h2>
+        <div class="card">
+            <div class="card-header">
+                <a class="btn btn-outline-primary" href="{{ path('app_facturemeca_new') }}">
+                    Creer Nouvelle Facture
+                </a>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <th>ID Facture</th>
+                        <th>Article</th>
+                        <th>Quantite</th>
+                        <th>Description</th>
+                        <th>Prix Hors Tva</th>
+                        <th>Prix Avec Tva</th>
+                        <th>total</th>
+
+
+                        <th width="240px">Action</th>
+                    </tr>
+                    {% for facture in facturemecas %}
+                        <tr>
+                            <td>{{ facture.idfact }}</td>
+                            <td>{{ facture.article }}</td>
+                            <td>{{ facture.quantite }}</td>
+                            <td>{{ facture.description }}</td>
+                            <td>{{ facture.prixsanstva }}</td>
+                            <td>{{ facture.prixavectva }}</td>
+                            <td>{{ facture.total }}</td>
+
+                            <td>
+                                <form method="post" action="{{ path('app_facturemeca_delete', {'id_fact': facture.idfact}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                    <a
+                                            class="btn btn-outline-info"
+                                            href="{{ path('app_facturemeca_show', {'id_fact': facture.idfact}) }}">
+                                        Show
+                                    </a>
+                                    <a
+                                            class="btn btn-outline-success"
+                                            href="{{ path('app_facturemeca_edit', {'id_fact': facture.idfact}) }}">
+                                        Edit
+                                    </a>
+
+
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ facture.idfact) }}">
+                                    <button class="btn btn-outline-danger">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

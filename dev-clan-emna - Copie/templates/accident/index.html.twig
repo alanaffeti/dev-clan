@@ -1,0 +1,83 @@
+
+{% extends 'baseback.html.twig' %}
+
+{% block title %}les voitures accidentees {% endblock %}
+
+{% block body %}
+    <style>
+        .container{
+            max-width: 60%;
+            margin-top: 5%;
+        }
+    </style>
+    <div class="container">
+        <h2 class="text-center mt-5 mb-3">Liste des Voitures accidentées</h2>
+        <div class="card">
+           <!-- <div class="card-header">
+                <a class="btn btn-outline-primary" href="{{ path('app_accident_new') }}">
+                    creer nouvelle voiture accidentee
+                </a> -->
+            </div>
+
+            <div class="card-body">
+                <table class="table table-bordered">
+
+                    <tr>
+                        <th>Id</th>
+                        <th>Nom_client</th>
+                        <th>Prenom_client</th>
+                        <th>Matricule</th>
+                        <th>Image_voiture</th>
+                        <th>Image_voiture_reparee</th>
+                        <th>Image_piece_endommage</th>
+                        <th>Image_nouveau_pieces</th>
+                        <th>Image_facture_reparation</th>
+                        <th>actions</th>
+
+
+                    </tr>
+                    {% for accident in accidents %}
+                        <tr>
+                            <td>{{ accident.id }}</td>
+                            <td>{{ accident.nomClient }}</td>
+                            <td>{{ accident.prenomClient }}</td>
+                            <td>{{ accident.matricule }}</td>
+                            <td>{{ accident.image }}</td>
+                            <td>{{ accident.imageVoitureReparee }}</td>
+                            <td>{{ accident.imagePieceEndommage }}</td>
+                            <td>{{ accident.imageNouveauPieces }}</td>
+                            <td>{{ accident.imageFactureReparation }}</td>
+
+                            <td>
+                                <form method="post" action="{{ path('app_accident_delete', {'id': accident.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                    <a
+                                            class="btn btn-outline-info"
+                                            href="{{ path('app_accident_show', {'id': accident.id}) }}">
+                                        Show
+                                    </a>
+                                    <a
+                                            class="btn btn-outline-success"
+                                            href="{{ path('app_accident_edit', {'id': accident.id}) }}">
+                                        Edit
+                                    </a>
+
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ accident.id) }}">
+                                    <button class="btn btn-outline-danger">Delete</button>
+
+                                </form>
+                            </td>
+
+                        </tr>
+                    {% endfor %}
+                </table>
+                <div class="count">
+                    {{ knp_pagination_render(accidents) }}
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
+
+

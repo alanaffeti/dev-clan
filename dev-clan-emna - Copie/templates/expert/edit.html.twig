@@ -1,0 +1,20 @@
+{% extends 'baseback.html.twig' %}
+
+{% block title %}Edit Expert{% endblock %}
+
+{% block body %}
+<style>
+  .container{
+   max-width: 60%;
+   margin-top: 5%;
+}
+</style>
+<div class="container">
+    <h1>Edit Expert</h1>
+
+    {{ include('expert/_form.html.twig', {'button_label ': 'Update'}) }}
+
+   <center> <a class=' btn btn-primary ' href="{{ path('app_expert_index') }}">back to list</a></center>
+</div>
+    {# {{ include('expert/_delete_form.html.twig') }} #}
+{% endblock %}

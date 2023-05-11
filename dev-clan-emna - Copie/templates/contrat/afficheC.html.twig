@@ -1,0 +1,45 @@
+
+    
+
+{% extends 'baseM2.html.twig' %}
+{% block body  %}
+
+
+<table border="0" width="100%">
+<tr>
+ <th> ID </th>
+  <th> date_debut</th>
+
+ <th> date_fin </th>
+
+
+ 
+ <th> prix </th>
+ <th> type</th>
+ <th> Nom</th>
+ <th> prenom</th>
+ <th> cin</th>
+ <th> region</th>
+
+
+</tr>
+<tr>
+{% for i in contrats %}
+
+
+<td>{{i.id}} </td>
+<td>{{ i.datedebut ? i.datedebut|date('Y-m-d H:i:s') : '' }}</td>
+<td>{{ i.datefin ? i.datefin|date('Y-m-d H:i:s') : '' }}</td>
+<td>{{i.prix}} </td>
+<td>{{i.type}} </td>
+<td>{{i.getNomConducteur()}} </td>
+<td>{{i.getPrenomConducteur()}} </td>
+<td>{{i.cin}} </td>
+<td>{{i.region}} </td>
+<td>  <a href="{{path('suppContrat',{'id':i.contrats.id})}}"> supprimer </a>   </td>
+
+
+</tr>
+{% endfor %}
+</table>
+{% endblock %}

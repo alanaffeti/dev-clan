@@ -1,0 +1,25 @@
+{% extends 'baseM2.html.twig' %}
+
+{% block body %}
+    <h1>Edit Voiture</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.marque) }}
+        {{ form_row(form.typevoiture) }}
+        {{ form_row(form.matricule) }}
+        {{ form_row(form.modele) }}
+        {{ form_row(form.datefabrication) }}
+        {{ form_row(form.typecarburant) }}
+        {{ form_row(form.kilometrage) }}
+        {{ form_row(form.etat) }}
+
+        {{ form_label(form.contrats) }}
+        <ul>
+            {% for contratForm in form.contrats %}
+                <li>{{ form_row(contratForm) }}</li>
+            {% endfor %}
+        </ul>
+
+        
+    {{ form_end(form) }}
+{% endblock %}

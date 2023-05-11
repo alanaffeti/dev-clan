@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+
+
+{% block body %}
+
+<br><br>
+<center>
+<h1> Reclamation </h1>
+
+{{include('reclamation/_form.html.twig')}}
+ </center> 
+
+<a href="{{ path('app_reclamation_index') }}" class="previous">&laquo; back to list</a>
+ 
+
+{% endblock body %}
+

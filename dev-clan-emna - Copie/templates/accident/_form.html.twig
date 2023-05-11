@@ -1,0 +1,24 @@
+{{ form_start(form,{attr:{novalidate:'novalidate'}}) }}
+<div class="form-group">
+    {{ form_row(form. nom_client, {'attr': {'class': 'form-control'}}) }}
+    {{ form_row(form.prenom_client, {'attr': {'class': 'form-control'}}) }}
+
+    {{ form_row(form.matricule, {'attr': {'class': 'form-control'}}) }}
+
+
+        {{ form_row(form.image, {'attr': {'class': 'form-control'}}) }}
+
+    {{ form_row(form.image_voiture_reparee, {'attr': {'class': 'form-control'}}) }}
+    {{ form_row(form.image_piece_endommage, {'attr': {'class': 'form-control'}}) }}
+    {{ form_row(form.image_nouveau_pieces, {'attr': {'class': 'form-control'}}) }}
+    {{ form_row(form.image_facture_reparation, {'attr': {'class': 'form-control'}}) }}
+    {{ form_row(form.lieu_mecaniciens, {'attr': {'class': 'form-control'}}) }}
+
+
+</div>
+
+
+<button class="btn {{ button_color|default('btn-outline-primary') }}  mt-3">{{ button_label|default('sauvgarder') }}</button>
+
+
+{{ form_end(form) }}

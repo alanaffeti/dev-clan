@@ -1,0 +1,64 @@
+{% extends 'baseM1.html.twig' %}
+{% block body %}
+    <h2>Welcome</h2>
+    
+    {{ form_start(f, {'attr':{'novalidate':'novalidate'}}) }}
+
+        {{ form_row(f.marque) }}
+        {{ form_errors(f.marque,{'attr':{'class':'text-danger'}}) }}
+
+        {{ form_row(f.typevoiture) }}
+        {{ form_row(f.matricule) }}
+        {{ form_errors(f.matricule,{'attr':{'class':'text-danger'}}) }}
+
+        {{ form_row(f.modele) }}
+        {{ form_errors(f.modele,{'attr':{'class':'text-danger'}}) }}
+
+        {{ form_row(f.datefabrication) }}
+        {{ form_errors(f.datefabrication,{'attr':{'class':'text-danger'}}) }}
+
+        {{ form_row(f.typecarburant) }}
+        {{ form_row(f.kilometrage) }}
+        {{ form_errors(f.kilometrage,{'attr':{'class':'text-danger'}}) }}
+
+        {{ form_row(f.etat) }}
+        {{ form_errors(f.etat,{'attr':{'class':'text-danger'}}) }}
+
+        
+        {# render each row and field in the embedded form, in this example it's rendering the experience (Exp) fiels as rows #}
+        <div class="col-sm-8 col-sm-offset-2" id="exp_list" data-prototype="{{ form_widget(f.contrats.vars.prototype)|e('html_attr') }}">
+            {% for row in f.contrats %}
+                <div class="panel panel-warning">
+                    <div class="panel-heading">
+                        <strong> Contrat </strong>
+                    </div>
+                    <div class="panel-body">
+                        {{ form_row(row.datedebut) }}
+                        {{ form_errors(row.datedebut,{'attr':{'class':'text-danger'}}) }}
+
+                        {{ form_row(row.datefin) }}
+                        {{ form_errors(row.datefin,{'attr':{'class':'text-danger'}}) }}
+
+                        {{ form_row(row.prix) }}
+
+                        {{ form_row(row.type) }}
+
+                        {{ form_row(row.nomconducteur) }}
+                        {{ form_errors(row.nomconducteur,{'attr':{'class':'text-danger'}}) }}
+                        {{ form_row(row.prenomconducteur) }}
+                        {{ form_errors(row.prenomconducteur,{'attr':{'class':'text-danger'}}) }}
+                        {{ form_row(row.cin) }}
+                        {{ form_errors(row.cin,{'attr':{'class':'text-danger'}}) }}
+                        {{ form_row(row.region) }}
+                        {{ form_errors(row.region,{'attr':{'class':'text-danger'}}) }}
+
+                    </div>
+                </div>
+            {% endfor %}
+        
+        
+        {{ form_row(f.save) }}
+
+        </div> 
+    {{ form_end(f) }}
+{% endblock %}

@@ -1,0 +1,49 @@
+
+
+
+
+
+{{form_start(form,{'attr':{'novalidate': 'novalidate'}} )}}
+<table>
+<tr>
+<td> {{ form_label(form.nom_ag,"Nom de l'agent")  }}
+ </td>
+<td>  {{ form_widget(form.nom_ag) }}
+</td>  
+<td> {{ form_errors(form.nom_ag) }}
+</td>
+</tr>
+
+<tr>
+
+<tr>
+<td> {{ form_label(form.prenom_ag,"Prenom de l'agent")  }}
+ </td>
+<td>  {{ form_widget(form.prenom_ag) }}
+</td>  
+<td> {{ form_errors(form.prenom_ag) }}
+</td>
+</tr>
+
+<tr>
+
+<td>  {{ form_label(form.traitement,"Traitement") }}
+</td>
+<td> {{ form_widget(form.traitement)}}
+ </td>
+<td>  {{ form_errors(form.traitement) }}
+</td>
+
+</tr>
+
+
+
+
+
+
+</table>
+<br>
+<br>
+    <button class="btn btn-success rounded-pill">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }}
+

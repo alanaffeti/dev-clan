@@ -1,0 +1,19 @@
+{% extends 'baseback.html.twig' %}
+
+{% block title %}New Expert{% endblock %}
+
+{% block body %}
+<style>
+  .container{
+   max-width: 60%;
+   margin-top: 5%;
+}
+</style>
+<div class="container">
+   <h1>Create new Expert</h1>
+
+    {{ include('expert/_form.html.twig') }}
+
+    <center><a class=' btn btn-primary ' href="{{ path('app_expert_index') }}">Back to list</a></center>
+    </div>
+{% endblock %}

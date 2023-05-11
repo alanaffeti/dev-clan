@@ -1,0 +1,24 @@
+
+{% extends 'baseback.html.twig' %}
+
+{% block body %}
+{% block content2 %}
+<style>
+.container{
+   max-width: 60%;
+   margin-top: 5%;
+}
+</style>
+
+   <div class="container"> 
+   {{ form_start(add,{'attr' : {'novalidate' : 'novalidate'}} ) }}
+   {{ form(add) }}
+   {{ form_errors(add.quantite) }}
+   {{ form_errors(add.nom_piece) }}
+   {{ form_errors(add.nom_client) }}
+   {{ form_errors(add.id_client) }}
+   {{ form_errors(add.montant_facture) }}
+   </div>
+{% endblock %}
+{% endblock %}
+

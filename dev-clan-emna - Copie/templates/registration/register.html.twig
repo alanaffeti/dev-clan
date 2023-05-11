@@ -1,0 +1,179 @@
+{% extends 'baseback.html.twig' %}
+
+
+{% block header %}
+    <header id="header" class="header fixed-top">
+        <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
+
+            <a href="index.html" class="logo d-flex align-items-center">
+              
+                <span>Assurensea</span>
+            </a>
+
+            
+
+        </div>
+    </header><!-- End Header -->
+
+{% endblock %}
+{% block sidebar %}
+{% endblock %}
+{% block footer %}
+
+        <div class="footer-top">
+            <div class="container">
+                <div class="row gy-4">
+                    <div class="col-lg-5 col-md-12 footer-info">
+                        <a href="index.html" class="logo d-flex align-items-center">
+                            <img src="asset1/img/logo.png" alt="">
+                            <span>Assurensea</span>
+                        </a>
+                      <!--  <p>Cras fermentum odio eu feugiat lide par naso tierra. Justo eget nada terra videa magna derita valies darta donna mare fermentum iaculis eu non diam phasellus.</p>-->
+                        <div class="social-links mt-3">
+                            <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+                            <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+                            <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+                            <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                        </div>
+                    </div>
+
+                    <!--<div class="col-lg-2 col-6 footer-links">
+                        <h4>Useful Links</h4>
+                        <ul>
+                            <li><i class="bi bi-chevron-right"></i> <a href="#">Home</a></li>
+                            <li><i class="bi bi-chevron-right"></i> <a href="#">About us</a></li>
+                            <li><i class="bi bi-chevron-right"></i> <a href="#">Services</a></li>
+                            <li><i class="bi bi-chevron-right"></i> <a href="#">Terms of service</a></li>
+                            <li><i class="bi bi-chevron-right"></i> <a href="#">Privacy policy</a></li>
+                        </ul>
+                    </div>-->
+
+                   <!-- <div class="col-lg-2 col-6 footer-links">
+                        <h4>Our Services</h4>
+                        <ul>
+                            <li><i class="bi bi-chevron-right"></i> <a href="#">Web Design</a></li>
+                            <li><i class="bi bi-chevron-right"></i> <a href="#">Web Development</a></li>
+                            <li><i class="bi bi-chevron-right"></i> <a href="#">Product Management</a></li>
+                            <li><i class="bi bi-chevron-right"></i> <a href="#">Marketing</a></li>
+                            <li><i class="bi bi-chevron-right"></i> <a href="#">Graphic Design</a></li>
+                        </ul>
+                    </div>-->
+
+                    <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
+                        <h4>Contact Us</h4>
+                        <p>
+                            Esprit <br>
+                            tunis, 2028<br>
+                            tunisia <br><br>
+                            <strong>Phone:</strong> +216 55 895 548<br>
+                            <strong>Email:</strong> assurensea.contact@gmail.com<br>
+                        </p>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="copyright">
+                &copy; Copyright <strong><span>Assurensea</span></strong>. All Rights Reserved
+            </div>
+            <div class="credits">
+                <!-- All the links in the footer should remain intact. -->
+                <!-- You can delete the links only if you purchased the pro version. -->
+                <!-- Licensing information: https://bootstrapmade.com/license/ -->
+                <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/Assurensea-bootstrap-startup-template/ -->
+                Designed by Dev clan
+            </div>
+        </div>
+    </footer><!-- End Footer -->
+
+{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+
+        <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+
+                        
+                        <div class="card mb-3">
+
+                            <div class="card-body">
+
+                                <div class="pt-4 pb-2">
+                                    <h5 class="card-title text-center pb-0 fs-4">Create an Account</h5>
+                                    <p class="text-center small">Enter your personal details to create account</p>
+                                </div>
+
+
+                                {{ form_start(form,{attr:{novalidate:'novalidate'}}) }}
+                                <div class="col-12">
+                                        <label for="yourName" class="form-label">Your Name</label>
+
+                                        <div class="invalid-feedback">Please, enter your name!</div>
+                                    {{ form_widget(form.name,{'attr':{'class':'form-control'}}) }}
+                                 
+                                </div>
+                                 {{ form_errors(form.name,{'attr':{'class':'text-danger'}}) }}
+                                 <div class="col-12">
+                                        <label for="yourlastname" class="form-label">Your lastname</label>
+
+                                        <div class="invalid-feedback">Please, enter your lastname!</div>
+                                    {{ form_widget(form.lastname,{'attr':{'class':'form-control'}}) }}
+
+                                </div>
+                                 {{ form_errors(form.lastname,{'attr':{'class':'text-danger'}}) }}
+                                    <div class="col-12">
+                                        <label for="yourEmail" class="form-label">Your Email</label>
+                                        {{ form_widget(form.email,{'attr':{'class':'form-control'}}) }}
+                                        <div class="invalid-feedback">Please enter a valid Email adddress!</div>
+                                    </div>
+                                    {{ form_errors(form.email,{'attr':{'class':'text-danger'}}) }}
+
+
+                                    <div class="col-12">
+                                        <label for="yourPassword" class="form-label">Password</label>
+                                        {{ form_widget(form.password.first,{'attr':{'class':'form-control'}}) }}
+                                        <div class="invalid-feedback">Please enter your password!</div>
+                                    </div>
+                                    {{ form_errors(form.password,{'attr':{'class':'text-danger'}}) }}
+                                <div class="col-12">
+                                    <label for="yourPassword" class="form-label">Confirm Password</label>
+                                    {{ form_widget(form.password.second,{'attr':{'class':'form-control'}}) }}
+                                    <div class="invalid-feedback">Please confirm your password!</div>
+                                </div>
+                                  {{ form_errors(form.password,{'attr':{'class':'text-danger'}}) }}
+                                    <div class="col-12">
+                                        <div class="form-check">
+                                            <input class="form-check-input" name="terms" type="checkbox" value="" id="acceptTerms" required="">
+                                            <label class="form-check-label" for="acceptTerms">I agree and accept the <a href="#">terms and conditions</a></label>
+                                            <div class="invalid-feedback">You must agree before submitting.</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <button class="btn btn-primary w-100" type="submit">Create Account</button>
+                                    </div>
+                                    <div class="col-12">
+                                        <p class="small mb-0">Already have an account? <a href="{{ path('app_login') }}">Log in</a></p>
+                                    </div>
+                                {{ form_end(form) }}
+
+                            </div>
+                        </div>
+
+                      
+
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </div>
+
+{% endblock %}

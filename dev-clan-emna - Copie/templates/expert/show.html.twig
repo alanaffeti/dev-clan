@@ -1,0 +1,41 @@
+{% extends 'baseback.html.twig' %}
+
+{% block title %}Expert{% endblock %}
+
+{% block body %}
+<style>
+  .container{
+   max-width: 60%;
+   margin-top: 5%;
+}
+</style>
+<div class="container">
+    <h1>Expert</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ expert.id }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ expert.nom }}</td>
+            </tr>
+            <tr>
+                <th>Prenom</th>
+                <td>{{ expert.prenom }}</td>
+            </tr>
+            <tr>
+                <th>Cin</th>
+                <td>{{ expert.cin }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <center><a class=' btn btn-primary rounded' href="{{ path('app_expert_index') }}">Back to list</a></center>
+  </div>
+    {# <a class="btn btn-success" href="{{ path('app_expert_edit', {'id': expert.id}) }}">Edit</a> #}
+
+    {# {{ include('expert/_delete_form.html.twig') }} #}
+{% endblock %}

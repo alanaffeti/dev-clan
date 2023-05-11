@@ -1,0 +1,142 @@
+{% extends 'baseM2.html.twig' %}
+
+
+{% block body %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Contrats pour la voiture {{ voiture.marque }} {{ voiture.modele }}</title>
+	<style>
+		body {
+			padding: 20px;
+			font-family: Arial, sans-serif;
+			font-size: 16px;
+		}
+		h1 {
+			font-size: 36px;
+			text-align: center;
+			margin-bottom: 20px;
+		}
+		ul {
+			list-style: disc;
+			margin-top: 20px;
+			margin-bottom: 20px;
+		}
+		li {
+			margin-bottom: 10px;
+			padding: 5px;
+			transition: background-color 0.3s ease;
+		}
+		li:hover {
+			background-color: #f7f7f7;
+		}
+		button {
+			padding: 5px 10px;
+			background-color: #dc3545;
+			color: #fff;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+			transition: background-color 0.3s ease;
+		}
+		button:hover {
+			background-color: #c82333;
+		}
+		footer {
+			margin-top: 50px;
+			text-align: center;
+			color: #999;
+			font-size: 14px;
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<h1>Contrats pour la voiture {{ voiture.marque }} {{ voiture.modele }}</h1>
+	</header>
+	
+	{% if contrats is empty %}
+	    <p>Aucun contrat trouvé pour cette voiture.</p>
+	{% else %}
+	    <ul>
+	        {% for contrat in contrats %}
+	            <li>
+	                Contrat n°{{ contrat.id }} :
+	       
+</head>
+<body>
+    {# <h1>Constat</h1> #}
+    
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ contrat.id }}</td>
+            </tr>
+            
+            <tr>
+                <th>Prix</th>
+                <td>{{ contrat.prix }}</td>
+            </tr>
+            <tr>
+                <th>Type de voiture</th>
+                <td>{{ contrat.type }}</td>
+            </tr>
+            <tr>
+                <th>Date de debut </th>
+                <td>{{ contrat.datedebut ? contrat.datedebut|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Date de fin </th>
+                <td>{{ contrat.datefin ? contrat.datefin|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Nom conducteur</th>
+                <td>{{ contrat.nomconducteur }}</td>
+            </tr>
+            <tr>
+                <th>prenom conducteur</th>
+                <td>{{ contrat.prenomconducteur }}</td>
+            </tr>
+            <tr>
+                <th>Cin</th>
+                <td>{{ contrat.cin }}</td>
+            </tr>
+            <tr>
+                <th>Region</th>
+                <td>{{ contrat.region }}</td>
+            </tr>
+            
+        
+    </tr>
+            
+            </tr>
+            <tr>
+             <tr>
+
+        </tbody>
+    </table>
+
+    </body>
+	                <form action="{{ path('contrat_delete', {'id': contrat.id}) }}" onsubmit="return confirm('Are you sure you want to delete this contrat?');">
+	                    <input type="hidden" name="_method" value="DELETE">
+	                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ contrat.id) }}">
+	                    <button type="submit">Supprimer</button>
+
+						 <a href="{{ path('pdf', {'id': contrat.id}) }}" class="btn btn-info">
+                    <i class="fas fa-edit"></i> pdf
+                </a>
+	                </form>
+					
+	            </li>
+	        {% endfor %}
+	    </ul>
+	{% endif %}
+	
+	<footer>
+		<p>Contactez-nous au 01 23 45 67 89 ou par email à contact@monentreprise.com</p>
+	</footer>
+</body>
+</html>
+{% endblock %}

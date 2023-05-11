@@ -1,0 +1,68 @@
+{% extends 'baseback.html.twig' %}
+
+
+{% block body %}
+
+
+	<div class="row" style="display: flex;align-items: center;justify-content: center;margin-top: 150px; ">
+
+		<div class="col-lg-6">
+
+			<div class="card">
+				<div class="card-body">
+					<a href="{{ path('addClient') }}">
+						<i class="ri-arrow-left-circle-fill" style="font-size: 50px;"></i>
+					</a>
+					<h5 class="card-title">Liste des clients</h5>
+
+					<!-- Table with stripped rows -->
+					<table class="table table-striped">
+						<thead>
+							<tr>
+
+								<th>Name</th>
+								<th>Lastname</th>
+								<th>adresse
+								<th>email</th>
+								<th>telephone</th>
+								<th>genre</th>
+								<th>remove</th>
+                                <th> edit </th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for client in clients %}
+								<tr>
+
+									<td>{{ client.name }}</td>
+									<td>{{ client.lastname}}</td>
+									<td>{{ client.cin }}</td>
+									<td>{{ client.email }}</td>
+									<td>{{ client.numTel }}</td>
+									<td>{{ client.genre }}</td>
+
+									<td>
+										{% if client.id is not empty %}
+											
+
+                                                <a href="{{ path('suppC', {'id': client.id}) }}" method="POST">supprimer</a>
+											</form>
+										{% endif %}
+									</td>
+                                   <td><a  class="btn btn-success" href="{{ path('app_user_edit', {'id': user.id}) }}">Modifier</a> </td>
+
+								</tr>
+							{% endfor %}
+
+						</tbody>
+					</table>
+					<!-- End small tables -->
+
+				</div>
+			</div>
+
+		</div>
+
+
+	</div>
+{% endblock %}

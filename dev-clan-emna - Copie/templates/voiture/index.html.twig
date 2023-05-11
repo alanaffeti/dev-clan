@@ -1,0 +1,17 @@
+{% extends 'baseM1.html.twig' %}
+
+{% block title %}Hello VoitureController!{% endblock %}
+
+{% block body %}
+
+<h1>Thanks for your order!</h1>
+    <p>
+        We appreciate you fo choosing us !
+        To complete the contrat procedure please complete the paiement ! 
+        <form>
+             <button type="submit" formaction="{{ path('checkout') }}">Checkout</button>
+             </form>
+
+    </p>
+
+{% endblock %}
